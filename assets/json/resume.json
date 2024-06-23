@@ -127,7 +127,7 @@
       "name": "Holistic Interaction Transformer Network for Action Detection",
       "publisher": "WACV",
       "releaseDate": "2023-02-10",
-      "url": "https://openaccess.thecvf.com/content/WACV2023/papers/Faure_Holistic_Interaction_Transformer_Network_for_Action_Detection_WACV_2023_paper.pdf",
+      "url": "https://openaccess.thecvf.com/content/WACV2023/html/Faure_Holistic_Interaction_Transformer_Network_for_Action_Detection_WACV_2023_paper.html",
       "summary": "Develop a model that uses skeleton information to improve Action Detection."
     },
     {
