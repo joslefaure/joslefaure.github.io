@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our paper, `Holistic Interaction Transformer Network for Spatio-Temporal Action Detection` is accepted for publication at WACV23.
+Our paper, Holistic Interaction Transformer Network for Spatio-Temporal Action Detection, is accepted for publication at WACV23.

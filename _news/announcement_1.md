@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Start my PhD at [National Taiwan University](https://www.ntu.edu.tw/english/), supervised by Prof [Winston Hsu](https://winstonhsu.info/).
+Start my PhD at National Taiwan University, supervised by Prof Winston Hsu

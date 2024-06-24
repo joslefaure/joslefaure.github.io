@@ -5,5 +5,5 @@ inline: true
 related_posts: false
 ---
 
-Join [HTC](https://www.htc.com) as a Senior Computer Vision Engineer working on full body tracking.
+Join HTC Vive as a Senior Computer Vision Engineer working on full body tracking.
 
