@@ -112,14 +112,14 @@
       "date": "2019-08",
       "issuer": "Deeplearning.ai",
       "url": "https://www.coursera.org/account/accomplishments/specialization/certificate/NKKHVW8HEP7Z",
-      "icon": "fa-solid fa-location-dot"
+      "icon": "fa-solid fa-cogs"
     },
     {
       "name": "Tensorflow Developer Certificate",
       "date": "2021-04",
       "issuer": "Google, Tensorflow",
       "url": "https://drive.google.com/file/d/1e4uxNMV8Mv-h3aYPAl0bGVn2hfSFkqpu/view",
-      "icon": "fa-solid fa-tag"
+      "icon": "fa-solid fa-code"
     }
   ],
   "publications": [
@@ -149,7 +149,7 @@
     {
       "name": "Artificial Intelligence",
       "level": "PhD",
-      "icon": "fa-solid fa-hashtag",
+      "icon": "fa-solid fa-brain",
       "keywords": [
         "Deep Learning",
         "Computer Vision",
@@ -162,13 +162,18 @@
   "languages": [
     {
       "language": "French",
-      "fluency": "Native speaker",
-      "icon": ""
+      "fluency": "Fluent",
+      "icon": "fa-solid fa-glob"
     },
     {
       "language": "English",
       "fluency": "Fluent",
-      "icon": ""
+      "icon": "fa-solid fa-glob"
+    },
+    {
+      "language": "Chinese",
+      "fluency": "Advanced",
+      "icon": "fa-solid fa-rocket"
     }
   ],
   "references": [
