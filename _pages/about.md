@@ -1,6 +1,6 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
 subtitle: <a href='https://www.ntu.edu.tw/english/'>National Taiwan University</a> / <a href='https://www.htc.com'>HTC</a>.
 

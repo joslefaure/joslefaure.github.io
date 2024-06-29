@@ -86,14 +86,14 @@
   "awards": [
     {
       "title": "Master's Thesis Excellence Award",
-      "date": "2022-09-01",
+      "date": "2022-12-02",
       "awarder": "Taiwanese Association of Artificial Intelligence (TAAI)",
       "url": "https://drive.google.com/file/d/1qqdg3PYLmm_eRhUuU4y9ahgjm15TEMkp/view?usp=sharing",
       "summary": "This Award goes to the authors of the best Master's Theses on Artificial Intelligence in Taiwan."
     },
     {
       "title": "ECCV 2022 DeeperAction Challenge",
-      "date": "2022-07-01",
+      "date": "2022-10-23",
       "awarder": "European Conference on Computer Vision (ECCV)",
       "url": "https://drive.google.com/file/d/1OIzR84s6tJulpGMAK03vleBPz3nqR9zW/view",
       "summary": "I led the team which placed second. We designed a multimodal action detection framework to accurately detect multiple persons performing multiple overlapping actions."
