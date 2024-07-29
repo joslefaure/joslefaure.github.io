@@ -10,7 +10,7 @@ featured: true
 related_posts: false
 code: https://github.com/joslefaure/SCENE
 paper: https://github.com/joslefaure/SCENE
-redirect: /assets/html/2024-08-15-SCENE-copy.html
+redirect: /assets/html/hermes.html
 
 authors:
   - name: First Author Name
