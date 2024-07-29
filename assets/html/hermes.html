@@ -264,7 +264,7 @@
         <h2 class="title is-3">Method Overview</h2>
         <div class="publication-video">
           <img src="../static/images/method_1.png" alt="method image."/>
-          <div class="caption">We stream through a video window-by-window and extract features using a frozen ViT.
+          <div class="content has-text-justified">We stream through a video window-by-window and extract features using a frozen ViT.
             Each window feature is processed by the ECO (illustrated in the lower left part of the graph) in an online fashion,
             discarding redundancies along the way and retaining video episodes which are passed to an episodic Q-Former.
              The video token bank contains features for every window, and SeTR selects only the high-level information to pass 
@@ -286,27 +286,25 @@
       <!-- Visual Effects. -->
       <div class="column">
         <div class="content">
-          <h2 class="title is-3">Results</h2>
+          <h2 class="title is-3">Long-Movie Understanding</h2>
           <p>
-            <i>HERMES</i> Achieves SOTA results on LVU, surpassing the previous state-of-the-art method by a staggering 7.3%.
+            <i>HERMES</i> Achieves SOTA results on MovieChat, surpassing the its closest competitor by a staggering 14.9%.
           </p>
-          <img src="../static/images/result_lvu.png" alt="result lvu."/>
+          <img src="../static/images/result_moviechat.png" alt="result mvchat."/>
         </div>
       </div>
       <!--/ Visual Effects. -->
 
       <!-- Matting. -->
       <div class="column">
-        <h2 class="title is-3">Matting</h2>
+        <h2 class="title is-3">Long Procedural Video Understanding</h2>
         <div class="columns is-centered">
           <div class="column content">
             <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
+              <i>HERMES</i> Achieves SOTA results on Breakfast and COIN, two long-form procedural videos.
             </p>
             <video id="matting-video" controls playsinline height="100%">
-              <source src="../static/videos/matting.mp4"
-                      type="video/mp4">
+              <img src="../static/images/result_bf_coin.png" alt="result coin."/>
             </video>
           </div>
 
@@ -318,38 +316,17 @@
     <!-- Animation. -->
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Animation</h2>
+        <h2 class="title is-3">Result on LVU</h2>
 
         <!-- Interpolating. -->
-        <h3 class="title is-4">Interpolating states</h3>
+        <!-- <h3 class="title is-4">Interpolating states</h3> -->
         <div class="content has-text-justified">
           <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
+            <i>HERMES</i> Achieves a far greater top-1 accuracy than the closest method on the challenging LVU dataset.
           </p>
         </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="../static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
-            </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="../static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
+        <div class="publication-video">
+          <img src="../static/images/result_lvu.png" alt="result lvu."/>
         </div>
         <br/>
         <!--/ Interpolating. -->
