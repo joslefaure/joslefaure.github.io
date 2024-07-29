@@ -264,12 +264,12 @@
         <h2 class="title is-3">Method Overview</h2>
         <div class="publication-video">
           <img src="../static/images/method_1.png" alt="method image."/>
-          <figcaption>We stream through a video window-by-window and extract features using a frozen ViT.
+          <div class="caption">We stream through a video window-by-window and extract features using a frozen ViT.
             Each window feature is processed by the ECO (illustrated in the lower left part of the graph) in an online fashion,
             discarding redundancies along the way and retaining video episodes which are passed to an episodic Q-Former.
              The video token bank contains features for every window, and SeTR selects only the high-level information to pass 
              to a hierarchical frame-to-sequence Q-Former. The episodic and high-level representations are then concatenated before 
-             being fed to the frozen LLM, which outputs a text following the instructions.</figcaption>
+             being fed to the frozen LLM, which outputs a text following the instructions.</div>
         </div>
       </div>
     </div>
@@ -286,15 +286,11 @@
       <!-- Visual Effects. -->
       <div class="column">
         <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
+          <h2 class="title is-3">Results</h2>
           <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
+            <i>HERMES</i> Achieves SOTA results on LVU, surpassing the previous state-of-the-art method by a staggering 7.3%.
           </p>
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="../static/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
+          <img src="../static/images/result_lvu.png" alt="result lvu."/>
         </div>
       </div>
       <!--/ Visual Effects. -->
