@@ -107,6 +107,13 @@ body {
     height: 100%;
 }
 
+.publication-video a {
+    margin:0px 20px;
+    display:inline-block;
+    text-decoration:none;
+    color:black;
+}
+
 .publication-body img {
 }
 
