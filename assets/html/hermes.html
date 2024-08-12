@@ -1,149 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="description"
-        content="Long-Form video understanding with Episodes and Semantics.">
-  <meta name="keywords" content="Episode, Semantics, Video-Understanding, HERMES">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Long-Form video understanding with Episodes and Semantics." />
+    <meta name="keywords" content="Episode, Semantics, Video-Understanding, HERMES" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-      dataLayer.push(arguments);
-    }
+      function gtag() {
+        dataLayer.push(arguments);
+      }
 
-    gtag('js', new Date());
+      gtag("js", new Date());
 
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
+      gtag("config", "G-PYVRSFMDRL");
+    </script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
 
-  <link rel="stylesheet" href="../static/css/bulma.min.css">
-  <link rel="stylesheet" href="../static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="../static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="../static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="../static/css/index.css">
-  <link rel="icon" href="../img/favicon_ai.jpeg">
+    <link rel="stylesheet" href="../static/css/bulma.min.css" />
+    <link rel="stylesheet" href="../static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="../static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="../static/css/fontawesome.all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+    <link rel="stylesheet" href="../static/css/index.css" />
+    <link rel="icon" href="../img/favicon_ai.jpeg" />
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="../static/js/fontawesome.all.min.js"></script>
-  <script src="../static/js/bulma-carousel.min.js"></script>
-  <script src="../static/js/bulma-slider.min.js"></script>
-  <script src="../static/js/index.js"></script>
-</head>
-<body>
-
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="../static/js/fontawesome.all.min.js"></script>
+    <script src="../static/js/bulma-carousel.min.js"></script>
+    <script src="../static/js/bulma-slider.min.js"></script>
+    <script src="../static/js/index.js"></script>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://joslefaure.github.io/blog/2024/SCENE/">
-            SCENE
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center">
+          <a class="navbar-item" href="https://keunhong.com">
+            <span class="icon">
+              <i class="fas fa-home"></i>
+            </span>
           </a>
-          <a class="navbar-item" href="https://openaccess.thecvf.com/content/WACV2023/html/Faure_Holistic_Interaction_Transformer_Network_for_Action_Detection_WACV_2023_paper.html">
-            HIT
-          </a>
-          <a class="navbar-item" href="https://arxiv.org/abs/2304.04688">
-            iCLIP
-          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> More Research </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="https://joslefaure.github.io/blog/2024/SCENE/"> SCENE </a>
+              <a
+                class="navbar-item"
+                href="https://openaccess.thecvf.com/content/WACV2023/html/Faure_Holistic_Interaction_Transformer_Network_for_Action_Detection_WACV_2023_paper.html"
+              >
+                HIT
+              </a>
+              <a class="navbar-item" href="https://arxiv.org/abs/2304.04688"> iCLIP </a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </nav>
 
-  </div>
-</nav>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"> <a href="">Author 1</a><sup>1</sup>,</span>
+                <span class="author-block"> <a href="">Author 2</a><sup>2</sup>,</span>
+                <span class="author-block"> <a href="">Author 3</a><sup>2</sup>, </span>
+                <span class="author-block"> <a href="">Author 4</a><sup>2</sup>, </span>
+                <span class="author-block"> <a href="">Author 5</a><sup>2</sup>, </span>
+                <span class="author-block"> <a href="">Author 6</a><sup>2</sup>, </span>
+              </div>
 
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"><sup>1</sup>Affiliation I,</span>
+                <span class="author-block"><sup>2</sup>Affiliation II</span>
+              </div>
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="">Author 1</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="">Author 2</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="">Author 3</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="">Author 4</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="">Author 5</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="">Author 6</a><sup>2</sup>,
-            </span>
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Affiliation I,</span>
-            <span class="author-block"><sup>2</sup>Affiliation II</span>
-          </div>
-
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href=""
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- PDF Link. -->
+                  <span class="link-block">
+                    <a href="" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
                   </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Video Link. -->
-              <span class="link-block">
-                <a href=""
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
+                  <!-- Video Link. -->
+                  <span class="link-block">
+                    <a href="" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                      </span>
+                      <span>Video</span>
+                    </a>
                   </span>
-                  <span>Video</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/joslefaure/HERMES"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
+                  <!-- Code Link. -->
+                  <span class="link-block">
+                    <a href="https://github.com/joslefaure/HERMES" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
                   </span>
-                  <span>Code</span>
-                  </a>
-              </span>
-              <!-- Dataset Link. -->
-              <!-- <span class="link-block">
+                  <!-- Dataset Link. -->
+                  <!-- <span class="link-block">
                 <a href="https://github.com/google/nerfies/releases/tag/0.1"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
@@ -152,28 +130,27 @@
                   <span>Data</span>
                 </a>
               </span> -->
+                </div>
+              </div>
             </div>
-
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-        <img src="../static/images/teaser.png" alt="Teaser image."/>
-      <h2 class="subtitle has-text-centered">
-        <span class="dnerf">HERMES</span> simulates episodic memory accumulation to capture action sequences from long videos and reinforces them with semantic knowledge dispersed throughout the video.
-      </h2>
-    </div>
-  </div>
-</section>
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <img src="../static/images/teaser.png" alt="Teaser image." />
+          <h2 class="subtitle has-text-centered">
+            <span class="dnerf">HERMES</span> simulates episodic memory accumulation to capture action sequences from long videos and reinforces them
+            with semantic knowledge dispersed throughout the video.
+          </h2>
+        </div>
+      </div>
+    </section>
 
-
-<!-- <section class="hero is-light is-small">
+    <!-- <section class="hero is-light is-small">
   <div class="hero-body">
     <div class="container">
       <div id="results-carousel" class="carousel results-carousel">
@@ -230,137 +207,125 @@
   </div>
 </section> -->
 
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            While existing research often treats long-form videos as extended short videos,
-            we propose a novel approach that more accurately reflects human cognition.
-          </p>
-          <p>
-            This paper introduces HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics,
-            a model that simulates episodic memory accumulation to capture action sequences and reinforces them
-            with semantic knowledge dispersed throughout the video. Our work makes two key contributions: 
-            First, we develop an Episodic COmpressor (ECO) module that efficiently aggregates crucial representations
-            from micro to semi-macro levels. Second, we propose a Semantics reTRiever  (SeTR) that enhances
-            these aggregated representations with semantic information by focusing on the broader context, 
-            dramatically reducing feature dimensionality while preserving relevant macro-level information. 
-            Extensive experiments demonstrate that HERMES achieves state-of-the-art performance across multiple
-            long-video understanding benchmarks in both zero-shot and fully-supervised settings.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Method Overview</h2>
-        <div class="publication-video">
-          <img src="../static/images/method_1.png" alt="method image."/>
-          <div class="content has-text-justified">We stream through a video window-by-window and extract features using a frozen ViT.
-            Each window feature is processed by the ECO (illustrated in the lower left part of the graph) in an online fashion,
-            discarding redundancies along the way and retaining video episodes which are passed to an episodic Q-Former.
-             The video token bank contains features for every window, and SeTR selects only the high-level information to pass 
-             to a hierarchical frame-to-sequence Q-Former. The episodic and high-level representations are then concatenated before 
-             being fed to the frozen LLM, which outputs a text following the instructions.</div>
-        </div>
-      </div>
-    </div>
-    <!--/ Paper video. -->
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Long Movie (MovieChat)</h2>
-          <p>
-            <i>HERMES</i> Achieves SOTA results on MovieChat, surpassing the its closest competitor by a staggering 14.9%.
-            The result marked with &Dagger in fully-supervised.
-          </p>
-          <img src="../static/images/result_moviechat.png" alt="result mvchat."/>
-        </div>
-      </div>
-      <!--/ Visual Effects. -->
-
-      <!-- Matting. -->
-      <div class="column">
-        <h2 class="title is-3">Long Procedural Video</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              <i>HERMES</i> Achieves SOTA results on Breakfast and COIN, two long-form procedural videos.
-            </p>
-              <img src="../static/images/result_bf_coin.png" alt="result coin."/>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                While existing research often treats long-form videos as extended short videos, we propose a novel approach that more accurately
+                reflects human cognition.
+              </p>
+              <p>
+                This paper introduces HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics, a model that simulates episodic
+                memory accumulation to capture action sequences and reinforces them with semantic knowledge dispersed throughout the video. Our work
+                makes two key contributions: First, we develop an Episodic COmpressor (ECO) module that efficiently aggregates crucial representations
+                from micro to semi-macro levels. Second, we propose a Semantics reTRiever (SeTR) that enhances these aggregated representations with
+                semantic information by focusing on the broader context, dramatically reducing feature dimensionality while preserving relevant
+                macro-level information. Extensive experiments demonstrate that HERMES achieves state-of-the-art performance across multiple
+                long-video understanding benchmarks in both zero-shot and fully-supervised settings.
+              </p>
+            </div>
           </div>
-
         </div>
+        <!--/ Abstract. -->
+
+        <!-- Paper video. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Method Overview</h2>
+            <div class="publication-video">
+              <img src="../static/images/method_1.png" alt="method image." />
+              <div class="content has-text-justified">
+                We stream through a video window-by-window and extract features using a frozen ViT. Each window feature is processed by the ECO
+                (illustrated in the lower left part of the graph) in an online fashion, discarding redundancies along the way and retaining video
+                episodes which are passed to an episodic Q-Former. The video token bank contains features for every window, and SeTR selects only the
+                high-level information to pass to a hierarchical frame-to-sequence Q-Former. The episodic and high-level representations are then
+                concatenated before being fed to the frozen LLM, which outputs a text following the instructions.
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--/ Paper video. -->
       </div>
-    </div>
-    <!--/ Matting. -->
+    </section>
 
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Long Movie (LVU)</h2>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <!-- Visual Effects. -->
+          <div class="column">
+            <div class="content">
+              <h2 class="title is-3">Long Movie (MovieChat)</h2>
+              <p>
+                <i>HERMES</i> Achieves SOTA results on MovieChat, surpassing the its closest competitor by a staggering 14.9%. The deemphasized
+                results are for the fully supervised model.
+              </p>
+              <img src="../static/images/result_moviechat.png" alt="result mvchat." />
+            </div>
+          </div>
+          <!--/ Visual Effects. -->
 
-        <!-- Interpolating. -->
-        <!-- <h3 class="title is-4">Interpolating states</h3> -->
-        <div class="content has-text-justified">
-          <p>
-            <i>HERMES</i> Achieves a far greater top-1 accuracy than the closest method on the challenging LVU dataset.
-          </p>
+          <!-- Matting. -->
+          <div class="column">
+            <h2 class="title is-3">Long Procedural Video</h2>
+            <div class="columns is-centered">
+              <div class="column content">
+                <p><i>HERMES</i> Achieves SOTA results on Breakfast and COIN, two long-form procedural videos.</p>
+                <img src="../static/images/result_bf_coin.png" alt="result coin." />
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="publication-video">
-          <img src="../static/images/result_lvu.png" alt="result lvu."/>
-        </div>
-        <!--/ Interpolating. -->
+        <!--/ Matting. -->
 
-        <!-- Re-rendering. -->
-        <h2 class="title is-4">Qualitative Results</h2>
-        <div class="content has-text-justified">
-          <p>
-            <span class="dnerf">HERMES</span> excels at fine-grained understanding of arbitrarily long videos.
-            Furthermore, it has the rare quality of knowing when it doesn't know.
-          </p>
-        </div>
-        <div class="content has-text-centered">
-          <img src="../static/images/qualitative_1.png" alt="qualitative 1"/>
-        </div>
-        <!--/ Re-rendering. -->
+        <!-- Animation. -->
+        <div class="columns is-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3">Long Movie (LVU)</h2>
 
-        <!-- Re-rendering. -->
-        <div class="content has-text-justified">
-          <p>
-            <span class="dnerf">HERMES</span> can identify animal species, accurately count them. 
-            It can also determine peoples' relationships by watching them interact across thousands of frames.
-          </p>
+            <!-- Interpolating. -->
+            <!-- <h3 class="title is-4">Interpolating states</h3> -->
+            <div class="content has-text-justified">
+              <p><i>HERMES</i> Achieves a far greater top-1 accuracy than the closest method on the challenging LVU dataset.</p>
+            </div>
+            <div class="publication-video">
+              <img src="../static/images/result_lvu.png" alt="result lvu." />
+            </div>
+            <!--/ Interpolating. -->
+
+            <!-- Re-rendering. -->
+            <h2 class="title is-4">Qualitative Results</h2>
+            <div class="content has-text-justified">
+              <p>
+                <span class="dnerf">HERMES</span> excels at fine-grained understanding of arbitrarily long videos. Furthermore, it has the rare
+                quality of knowing when it doesn't know.
+              </p>
+            </div>
+            <div class="content has-text-centered">
+              <img src="../static/images/qualitative_1.png" alt="qualitative 1" />
+            </div>
+            <!--/ Re-rendering. -->
+
+            <!-- Re-rendering. -->
+            <div class="content has-text-justified">
+              <p>
+                <span class="dnerf">HERMES</span> can identify animal species, accurately count them. It can also determine peoples' relationships by
+                watching them interact across thousands of frames.
+              </p>
+            </div>
+            <div class="content has-text-centered">
+              <img src="../static/images/qualitative_ext.png" alt="qualitative 1" />
+            </div>
+            <!--/ Re-rendering. -->
+          </div>
         </div>
-        <div class="content has-text-centered">
-          <img src="../static/images/qualitative_ext.png" alt="qualitative 1"/>
-        </div>
-        <!--/ Re-rendering. -->
+        <!--/ Animation. -->
 
-      </div>
-    </div>
-    <!--/ Animation. -->
-
-
-    <!-- Concurrent Work. -->
-    <!-- <div class="columns is-centered">
+        <!-- Concurrent Work. -->
+        <!-- <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">Related Links</h2>
 
@@ -384,56 +349,45 @@
         </div>
       </div>
     </div> -->
-    <!--/ Concurrent Work. -->
+        <!--/ Concurrent Work. -->
+      </div>
+    </section>
 
-  </div>
-</section>
-
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <!-- <pre><code>@article{park2021nerfies,
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <!-- <pre><code>@article{park2021nerfies,
   author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
   title     = {Nerfies: Deformable Neural Radiance Fields},
   journal   = {ICCV},
   year      = {2021},
 }</code></pre> -->
-  </div>
-</section>
+      </div>
+    </section>
 
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p>
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <a class="icon-link" href="">
+            <i class="fas fa-file-pdf"></i>
+          </a>
+          <a class="icon-link" href="" class="external-link" disabled>
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, and licenced under a
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"
+                  >Creative Commons Attribution-ShareAlike 4.0 International License</a
+                >.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</footer>
-
-</body>
+    </footer>
+  </body>
 </html>
