@@ -124,6 +124,13 @@
   ],
   "publications": [
     {
+      "name": "Bridging Episodes and Semantics: A Novel Framework for Long-Form Video Understanding",
+      "publisher": "ECCVW",
+      "releaseDate": "2024-08-24",
+      "url": "https://arxiv.org/abs/2408.17443",
+      "summary": "Took inspiration from cognitive processes to develop an episodic memory module and a semantic parser to efficiently understand long videos."
+    },
+    {
       "name": "Holistic Interaction Transformer Network for Action Detection",
       "publisher": "WACV",
       "releaseDate": "2023-02-10",

@@ -1,8 +1,8 @@
 ---
 layout: post
-date: 2022-08-22
+date: 2024-08-24
 inline: true
 related_posts: false
 ---
 
-Join HTC Vive as a Senior Computer Vision Engineer working on full body tracking.
+Our paper - Bridging Episodes and Semantics: A Novel Framework for Long-Form Video Understanding - is Accepted to the EVAL-FoMo Workshop at ECCV'24
