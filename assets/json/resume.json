@@ -124,6 +124,13 @@
   ],
   "publications": [
     {
+      "name": "HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics",
+      "publisher": "Arxiv",
+      "releaseDate": "2024-10-01",
+      "url": "https://arxiv.org/abs/2408.17443",
+      "summary": "Extended our ECCVW paper, BREASE with more datasets and more ablations"
+    },
+    {
       "name": "Bridging Episodes and Semantics: A Novel Framework for Long-Form Video Understanding",
       "publisher": "ECCVW",
       "releaseDate": "2024-08-24",

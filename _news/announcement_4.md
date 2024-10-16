@@ -1,8 +1,8 @@
 ---
 layout: post
-date: 2022-10-11
+date: 2024-10-15
 inline: true
 related_posts: false
 ---
 
-Our paper, Holistic Interaction Transformer Network for Spatio-Temporal Action Detection, is accepted for publication at WACV23.
+Serving as a reviewer for ICLR'25 :sparkles:
