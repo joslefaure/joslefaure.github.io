@@ -1,8 +1,8 @@
 ---
 layout: post
-date: 2024-10-15
+date: 2023-09-01
 inline: true
 related_posts: false
 ---
 
-Serving as a reviewer for ICLR'25 :sparkles:
+Start my PhD at National Taiwan University, supervised by Prof Winston Hsu
