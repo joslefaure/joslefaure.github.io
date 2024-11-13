@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our paper - MovieCORE: COgnitive REasoning in Movies - is accepted for publication at the NeurIPS'24 System 2 Reasoning At Scale Workshop.
+Our paper - MovieCORE: COgnitive REasoning in Movies - is accepted for publication at the NeurIPS24 System 2 Reasoning At Scale Workshop.
