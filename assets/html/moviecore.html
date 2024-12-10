@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Cognitive Reasoning in Movies" />
+    <meta name="keywords" content="LLM-agent, Video-Understanding, Reasoning" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MovieCORE: COgnitive REasoning in Movies</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+
+      gtag("js", new Date());
+
+      gtag("config", "G-PYVRSFMDRL");
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../static/css/bulma.min.css" />
+    <link rel="stylesheet" href="../static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="../static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="../static/css/fontawesome.all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+    <link rel="stylesheet" href="../static/css/index.css" />
+    <link rel="icon" href="../img/favicon_ai.jpeg" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="../static/js/fontawesome.all.min.js"></script>
+    <script src="../static/js/bulma-carousel.min.js"></script>
+    <script src="../static/js/bulma-slider.min.js"></script>
+    <script src="../static/js/index.js"></script>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center">
+          <a class="navbar-item" href="https://keunhong.com">
+            <span class="icon">
+              <i class="fas fa-home"></i>
+            </span>
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> More Research </a>
+            <div class="navbar-dropdown">
+              <a
+                class="navbar-item"
+                href="https://openaccess.thecvf.com/content/WACV2023/html/Faure_Holistic_Interaction_Transformer_Network_for_Action_Detection_WACV_2023_paper.html"
+              >
+                HIT
+              </a>
+              <a class="navbar-item" href="https://arxiv.org/abs/2304.04688"> iCLIP </a>
+              <a class="navbar-item" href="https://joslefaure.github.io/assets/html/hermes.html"> HERMES </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Message -->
+    <section class="hero is-primary is-bold">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h2 class="subtitle">
+            This project page hosts our NeurIPS'24 System 2 Reasoning At Scale Workshop Paper, <span class="dnerf">"MovieCORE"</span>
+          </h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">MovieCORE: COgnitive REasoning in Movies</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"> <a href="https://joslefaure.github.io/">Gueter Josmy Faure</a><sup>1</sup>, </span>
+                <span class="author-block"> <a href="">Ying Cheng</a><sup>4</sup>, </span>
+                <span class="author-block"> <a href="https://minhungchen.netlify.app/">Min-Hung Chen</a><sup>2</sup>, </span>
+                <span class="author-block"> <a href="https://www.cmlab.csie.ntu.edu.tw/~jiafongyeh/">Jia-Fong Yeh</a><sup>1</sup>, </span>
+                <span class="author-block"> <a href="">Hung-Ting Su</a><sup>1</sup>, </span>
+                <span class="author-block"> <a href="">Yung-Hao Tang</a><sup>5</sup>, </span>
+                <span class="author-block"> <a href="https://winstonhsu.info/">Winston H. Hsu</a><sup>1,3</sup>, </span>
+                <span class="author-block"> <a href="">Shang-Hong Lai</a><sup>4</sup></span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"><sup>1</sup>National Taiwan University, </span>
+                <span class="author-block"><sup>2</sup>NVIDIA, </span>
+                <span class="author-block"><sup>3</sup>Mobile Drive Technology, </span>
+                <span class="author-block"><sup>4</sup>National Tsing Hua University</span>
+                <span class="author-block"><sup>5</sup>National Chengchi University</span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- PDF Link. -->
+                  <span class="link-block">
+                    <a href="https://openreview.net/pdf?id=pDsr2Dh0JG" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+                  <!-- Video Link. -->
+                  <span class="link-block">
+                    <a href="" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                      </span>
+                      <span>Video</span>
+                    </a>
+                  </span>
+                  <!-- Code Link. -->
+                  <span class="link-block">
+                    <a href="https://github.com/joslefaure/moviecore" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                  <!-- Dataset Link. -->
+                  <!-- <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                </a>
+              </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <img src="../static/images/teaser.png" alt="Teaser image." />
+          <h2 class="subtitle has-text-centered">
+            "The <span class="dnerf">MovieCORE</span> dataset leverages an innovative 'agentic annotation' pipeline to automate the creation of thought-provoking video questions that challenge AI's deeper cognitive understanding."
+          </h2>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <a class="icon-link" href="https://arxiv.org/abs/2408.17443">
+            <i class="fas fa-file-pdf"></i>
+          </a>
+          <a class="icon-link" href="https://github.com/joslefaure/HERMES" class="external-link" disabled>
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, and licenced under a
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"
+                  >Creative Commons Attribution-ShareAlike 4.0 International License</a
+                >.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
