@@ -7,4 +7,6 @@ tags: video-understanding llm paper llm-agents
 categories: paper
 featured: true
 related_posts: false
-redirect: /assets/html/hermes.html
+redirect: /assets/html/moviecore.html
+
+---
