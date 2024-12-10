@@ -1,5 +1,6 @@
+---
 layout: distill
-title: HERMES
+title: MovieCORE
 date: 2024-12-09 11:06:00
 description: 
 tags: video-understanding llm paper llm-agents
