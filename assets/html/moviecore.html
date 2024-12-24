@@ -180,67 +180,66 @@
           </div>
         </div>
         <!--/ Abstract. -->
-
-        <!-- Paper video. -->
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-four-fifths">
-            <h2 class="title is-3">Method Overview</h2>
-            <div class="publication-video">
-              <img src="../static/images/moviecore/Poster_agenticWorkflow.png" alt="method image." />
-              <div class="content has-text-justified">
-                The "Critic Agent", acting as the master of ceremonies (MC), orchestrates interactions among specialized agents using video context
-                and task instructions. It sequentially engages the "System II VQA Expert", "Skeptical Researcher", "Detective", and "Meta Reviewer",
-                accumulating insights at each stage. Upon receiving final recommendations from the Meta Reviewer, the MC relays them to the System II
-                VQA Expert for VQA refinement. Subsequently, a subset of these refined VQAs undergoes evaluation by human experts for final
-                validation.
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--/ Paper video. -->
       </div>
     </section>
 
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Method Overview</h2>
-        <div class="publication-video">
-          <img src="../static/images/moviecore/Poster_agenticWorkflow.png" alt="method image." />
-          <div class="content has-text-justified">
-            The "Critic Agent", acting as the master of ceremonies (MC), orchestrates interactions among specialized agents using video context
-            and task instructions. It sequentially engages the "System II VQA Expert", "Skeptical Researcher", "Detective", and "Meta Reviewer",
-            accumulating insights at each stage. Upon receiving final recommendations from the Meta Reviewer, the MC relays them to the System II
-            VQA Expert for VQA refinement. Subsequently, a subset of these refined VQAs undergoes evaluation by human experts for final
-            validation.
+    <section class="section">
+      <div class="container is-max-desktop">
+        <!-- Animation. -->
+        <div class="columns is-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3">Comparison with other datasets in terms of semantic richness and depth</h2>
+
+            <!-- Interpolating. -->
+            <div class="content has-text-justified">
+              <p><i>MovieCORE</i>, unlike other datasets priotizes system-2 thinking, leading to more depth in the QAs.</p>
+            </div>
+            <div class="publication-video">
+              <img src="../static/images/moviecore/poster_dataset_comparison.png" alt="dataset Comparison." />
+            </div>
+            <!--/ Interpolating. -->
+
+            <!-- Re-rendering. -->
+            <h2 class="title is-3">Qualitative Results</h2>
+            <div class="content has-text-centered">
+              <img src="../static/images/moviecore/poster_agentic_vs_sp.png" alt="qualitative 2" />
+            </div>
+            <!--/ Re-rendering. -->
+
+            <!-- Re-rendering. -->
+            <div class="content has-text-centered">
+              <img src="../static/images/moviecore/agentic_comparison_v2.png" alt="qualitative 2" />
+            </div>
+            <!--/ Re-rendering. -->
+
+            <!-- Re-rendering. -->
+            <div class="content has-text-centered">
+              <img src="../static/images/moviecore/agentic_comparison_v3.png" alt="qualitative 3" />
+            </div>
+            <div class="content has-text-justified">
+              <p>
+                <span class="dnerf">Single-Pass versus Agentic Annotation.</span> The agentic method (bottom) elicits specific scene details, concrete
+                examples, and detailed story elements, demonstrating the enhanced granularity achieved through multi-agent refinement.
+              </p>
+            </div>
+            <!--/ Re-rendering. -->
           </div>
         </div>
       </div>
-    </div>
-    <!--/ Paper video. -->
-  </div>
-</section>
+    </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Comparison with other datasets in terms of semantic richness and depth</h2>
-
-        <!-- Interpolating. -->
-        <!-- <h3 class="title is-4">Interpolating states</h3> -->
-        <div class="content has-text-justified">
-          <p><i>MovieCORE</i>, unlike other datasets priotizes system-2 thinking, leading to more depth in the QAs.</p>
-        </div>
-        <div class="publication-video">
-          <img src="../static/images/moviecore/poster_dataset_comparison.png" alt="dataset Comparison." />
-        </div>
-        <!--/ Interpolating. -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>
+          @inproceedings{faure2moviecore,
+          title={MovieCORE: COgnitive REasoning in Movies},
+          author={Faure, Gueter Josmy and Chen, Min-Hung and Yeh, Jia-Fong and Cheng, Ying and Su, Hung-Ting and Lai, Shang-Hong and Hsu, Winston H},
+          booktitle={The First Workshop on System-2 Reasoning at Scale, NeurIPS'24}
+        }
+      </code></pre>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <footer class="footer">
       <div class="container">
