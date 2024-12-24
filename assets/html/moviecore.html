@@ -166,14 +166,14 @@
                 movie content.
               </p>
               <p>
-                Unlike existing datasets that focus on surface-level comprehension, MovieCORE emphasizes thought-provoking questions
-                that engage System-2 thinking while remaining specific to the video material. We propose an innovative agentic brainstorming approach,
-                utilizing multiple large language models (LLMs) as thought agents to generate and refine highquality question-answer pairs. To
-                evaluate dataset quality, we develop a set of cognitive tests assessing depth, thoughtprovocation potential, and syntactic complexity.
-                We also propose a comprehensive evaluation scheme for assessing VQA model performance on deeper cognitive tasks. Our work contributes
-                to advancing movie understanding in AI systems and provides valuable insights into the capabilities and limitations of current VQA
-                models when faced with more challenging, nuanced questions about cinematic content. We will make our agentic annotation system, the
-                dataset and its metadata publicly available.
+                Unlike existing datasets that focus on surface-level comprehension, MovieCORE emphasizes thought-provoking questions that engage
+                System-2 thinking while remaining specific to the video material. We propose an innovative agentic brainstorming approach, utilizing
+                multiple large language models (LLMs) as thought agents to generate and refine highquality question-answer pairs. To evaluate dataset
+                quality, we develop a set of cognitive tests assessing depth, thoughtprovocation potential, and syntactic complexity. We also propose
+                a comprehensive evaluation scheme for assessing VQA model performance on deeper cognitive tasks. Our work contributes to advancing
+                movie understanding in AI systems and provides valuable insights into the capabilities and limitations of current VQA models when
+                faced with more challenging, nuanced questions about cinematic content. We will make our agentic annotation system, the dataset and
+                its metadata publicly available.
               </p>
             </div>
           </div>
@@ -190,16 +190,19 @@
             <h2 class="title is-3">Agentic Annotation Workflow</h2>
 
             <div class="content has-text-justified">
-              <p>The Critic Agent, acting as the master of ceremonies (MC), orchestrates interactions among specialized agents using video context
-                and task instructions. It sequentially engages the System II VQA Expert, Skeptical Researcher, Detective, and Meta Reviewer, accumulating
-                insights at each stage</p>
-              <p>Upon receiving final recommendations from the Meta Reviewer, the MC relays them to the System II VQA Expert
-                for VQA refinement. Subsequently, a subset of these refined VQAs undergoes evaluation by human experts for final validation.</p>
+              <p>
+                The Critic Agent, acting as the master of ceremonies (MC), orchestrates interactions among specialized agents using video context and
+                task instructions. It sequentially engages the System II VQA Expert, Skeptical Researcher, Detective, and Meta Reviewer, accumulating
+                insights at each stage
+              </p>
+              <p>
+                Upon receiving final recommendations from the Meta Reviewer, the MC relays them to the System II VQA Expert for VQA refinement.
+                Subsequently, a subset of these refined VQAs undergoes evaluation by human experts for final validation.
+              </p>
             </div>
             <div class="content has-text-centered">
               <img src="../static/images/moviecore/Poster_agenticWorkflow.png" alt="qualitative 2" />
             </div>
-
 
             <h2 class="title is-3">Comparison with other datasets in terms of semantic richness and depth</h2>
 
@@ -213,7 +216,7 @@
             <!--/ Interpolating. -->
 
             <!-- Re-rendering. -->
-            <h2 class="title is-3">Qualitative Comparison between Single-Pass and Agentic Annotations/h2>
+            <h2 class="title is-3">Qualitative Comparison between Single-Pass and Agentic Annotations</h2>
             <div class="content has-text-centered">
               <img src="../static/images/moviecore/poster_agentic_vs_sp.png" alt="qualitative 2" />
             </div>
@@ -244,13 +247,11 @@
     <section class="section" id="BibTeX">
       <div class="container is-max-desktop content">
         <h2 class="title">BibTeX</h2>
-        <pre><code>
-          @inproceedings{faure2moviecore,
+        <pre><code>@inproceedings{faure2moviecore,
           title={MovieCORE: COgnitive REasoning in Movies},
           author={Faure, Gueter Josmy and Chen, Min-Hung and Yeh, Jia-Fong and Cheng, Ying and Su, Hung-Ting and Lai, Shang-Hong and Hsu, Winston H},
           booktitle={The First Workshop on System-2 Reasoning at Scale, NeurIPS'24}
-        }
-      </code></pre>
+        }</code></pre>
       </div>
     </section>
 
