@@ -1,12 +1,12 @@
 ---
-layout: distill
+# layout: distill
 title: HERMES
 date: 2024-07-15 11:06:00
 description: A novel method that simulates episodic memory accumulation to capture action sequences and reinforces them with semantic knowledge dispersed throughout the video.
 tags: video-understanding llm paper
 categories: paper
 thumbnail: assets/img/1719479888350.jpg
-featured: true
+# featured: true
 related_posts: false
 code: https://github.com/joslefaure/SCENE
 paper: https://github.com/joslefaure/SCENE

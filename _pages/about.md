@@ -16,7 +16,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a PhD Student in Computer Science at `National Taiwan University`, advised by Prof. [Winston Hsu](https://winstonhsu.info/), and a Senior Computer Vision Engineer at `HTC`. Prior to that, I earned my Master's Degree from National Tsing Hua University and my Bachelor's from National Yang Ming Chiao Tung University, both in Computer Science.
+I am a PhD Student in Computer Science at `National Taiwan University`, advised by Prof. [Winston Hsu](https://winstonhsu.info/), and a Software Engineer at Google. Previously, I was a Senior Computer Vision Engineer at `HTC`. Prior to that, I earned my Master's Degree from National Tsing Hua University and my Bachelor's from National Yang Ming Chiao Tung University, both in Computer Science.
 
 My research focuses on teaching machines to see and understand human actions in videos.
 
