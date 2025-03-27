@@ -24,11 +24,20 @@
   },
   "work": [
     {
+      "name": "Google",
+      "position": "Software Engineer",
+      "url": "https://www.google.com",
+      "startDate": "2025-03-31",
+      "endDate": "Present",
+      "summary": "Working on developing core human pose and behavior understanding for Android XR.",
+      "highlights": ["Human Understanding", "VR/XR", "Computer Vision"]
+    },
+    {
       "name": "HTC",
       "position": "Senior Engineer - Computer Vision",
       "url": "https://www.htc.com",
       "startDate": "2022-08-22",
-      "endDate": "Present",
+      "endDate": "2025-03-30",
       "summary": "Teaching tiny computers to accurately estimate human poses. This includes hand poses (VR headsets), body poses (vision-based trackers) and facial expressions (avatars).",
       "highlights": ["Virtual Reality", "Body/hand/face Tracking", "Computer Vision"]
     },
@@ -36,7 +45,7 @@
       "name": "Movella",
       "position": "Computer Vision Engineer Intern",
       "url": "https://www.movella.com",
-      "startDate": "2022-07-31",
+      "startDate": "2021-07-31",
       "endDate": "2022-02-14",
       "summary": "Help develop the company's first markerless tracker (Android/iOS app) for monitoring physically challenged patients and assist in their rehabilitation.",
       "highlights": ["Android Development", "Computer Vision", "Body Pose Tracking"]
