@@ -182,6 +182,11 @@
 
     <section class="section">
       <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Results and Ablations</h2>
+          </div>
+        </div>
         <!-- Paper video. -->
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
@@ -196,23 +201,18 @@
           <!-- Visual Effects. -->
           <div class="column">
             <div class="content">
-              <h2 class="title is-3">Long </h2>
-              <p>
-                <i>HERMES</i> Achieves SOTA results on MovieChat, surpassing the its closest competitor by a staggering 14.9%. The deemphasized
-                results are for the fully supervised model.
-              </p>
-              <img src="../static/images/result_moviechat.png" alt="result mvchat." />
+              <h3 class="title is-4">Long Movies (MovieChat)</h3>
+              <img src="../static/images/hermes/results_moviechat.png" alt="result mvchat." />
             </div>
           </div>
           <!--/ Visual Effects. -->
 
           <!-- Matting. -->
           <div class="column">
-            <h2 class="title is-3">Long Procedural Video</h2>
+            <h3 class="title is-4">Ablations: Accuracy vs Inference Time</h3>
             <div class="columns is-centered">
               <div class="column content">
-                <p><i>HERMES</i> Achieves SOTA results on Breakfast and COIN, two long-form procedural videos.</p>
-                <img src="../static/images/result_bf_coin.png" alt="result coin." />
+                <img src="../static/images/hermes/accuracy_vs_speed.png" alt="result coin." />
               </div>
             </div>
           </div>
