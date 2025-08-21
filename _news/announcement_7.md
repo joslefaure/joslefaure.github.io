@@ -1,8 +1,8 @@
 ---
 layout: post
-date: 2024-08-24
+date: 2025-08-21
 inline: true
-related_posts: false
+related_posts: true
 ---
 
-Our paper - Bridging Episodes and Semantics: A Novel Framework for Long-Form Video Understanding - is Accepted to the EVAL-FoMo Workshop at ECCV24.
+Our paper **MovieCORE: Cognitive Reasoning in Movies** is accepted for publication at EMNLP-2025 Main Conference 🚀.
