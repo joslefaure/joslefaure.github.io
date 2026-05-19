@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: <a href='https://www.google.com'>Google</a> / <a href='https://www.ntu.edu.tw/english/'>National Taiwan University</a>
+subtitle: <a href='https://www.google.com'>Google</a> | <a href='https://www.ntu.edu.tw/english/'>National Taiwan University</a>
 
 profile:
   align: right
