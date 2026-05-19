@@ -1,0 +1,255 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="FineBench — benchmark for Video Large Language Models" />
+    <meta name="keywords" content="FineBench, Video LLMs, benchmark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FineBench</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
+    <link rel="stylesheet" href="../static/css/bulma.min.css" />
+    <link rel="stylesheet" href="../static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="../static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="../static/css/fontawesome.all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+    <link rel="stylesheet" href="../static/css/index.css" />
+    <link rel="icon" href="../img/favicon_ai.jpeg" />
+    <link rel="stylesheet" href="https://cloudflare.com">
+
+
+    <script defer src="../static/js/fontawesome.all.min.js"></script>
+    <script src="../static/js/bulma-carousel.min.js"></script>
+    <script src="../static/js/bulma-slider.min.js"></script>
+    <script src="../static/js/index.js"></script>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center">
+          <a class="navbar-item" href="https://joslefaure.github.io/">
+            <span class="icon">
+              <i class="fas fa-home"></i>
+            </span>
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> More Research </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="https://joslefaure.github.io/assets/html/moviecore.html">MovieCORE</a>
+              <a class="navbar-item" href="https://joslefaure.github.io/assets/html/hermes.html">HERMES</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">FineBench</h1>
+              <h2 class="title is-2">Benchmarking and Enhancing Vision-Language Models for Fine-grained Human Activity Understanding</h2>
+              <h3 class="title is-3">CVPR'26</h3>
+              <h3 class="title is-4">Workshop on Video Large Language Models (VidLLMs)</h3>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"> <a href="https://joslefaure.github.io/">Gueter Josmy Faure</a><sup>1,2</sup>, </span>
+                <span class="author-block"> <a href="https://minhungchen.netlify.app/">Min-Hung Chen</a><sup>3</sup>, </span>
+                <span class="author-block"> <a href="https://www.cmlab.csie.ntu.edu.tw/~jiafongyeh/">Jia-Fong Yeh</a><sup>1</sup>, </span>
+                <span class="author-block"> <a href="">Hung-Ting Su</a><sup>1</sup>, </span>
+                <span class="author-block"> <a href="https://winstonhsu.info/">Winston H. Hsu</a><sup>1</sup></span>
+              </div>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"><sup>1</sup>National Taiwan University, </span>
+                <span class="author-block"><sup>2</sup>Google, </span>
+                <span class="author-block"><sup>3</sup>NVIDIA</span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/XXXX.XXXXX" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="ai ai-arxiv"></i></span>
+                      <span>arXiv (Coming Soon)</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href="https://github.com/joslefaure/FineBench_eval" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fab fa-github"></i></span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href="https://huggingface.co/datasets/FINEBENCH/FineBench" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fab fa-hugging-face"></i></span>
+                      <span>Dataset</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <img src="../static/images/finebench/FineBench_comparison_granular.jpg" alt="Teaser image for FineBench" />
+          <h2 class="subtitle has-text-centered">FineBench provides a benchmark and evaluation suites for fine-grained human-centric evaluation of vision-language models</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Vision-Language Models (VLMs) have demonstrated remarkable capabilities in general video understanding, yet they often struggle with the fine-grained comprehension crucial for real-world applications requiring nuanced interpretation of human actions and interactions.
+              </p>
+              <p>
+                While some recent human-centric benchmarks evaluate aspects of model behaviour such as fairness/ethics, emotion perception, and broader human-centric metrics, they do not combine long-form videos, very dense QA coverage, and frame-level spatial/temporal grounding at scale. To bridge this gap, we introduce FineBench, a human-centric video question answering (VQA) benchmark specifically designed to assess fine-grained understanding.
+              </p>
+              <p>
+                FineBench comprises 199,420 multiple-choice QA pairs densely annotated across 64 long-form videos (15 minutes each), focusing on detailed person movement, person interaction, and object manipulation, including compositional actions.
+              </p>
+              <p>
+                Our extensive evaluation reveals that while proprietary models like GPT-5 achieve respectable performance, current open-source VLMs significantly underperform, struggling particularly with spatial reasoning in multi-person scenes and distinguishing subtle differences in human movements and interactions.
+              </p>
+              <p>
+                To address these identified weaknesses, we propose FineAgent, a modular framework that enhances VLMs by leveraging a Localizer and a Descriptor. Experiments show that FineAgent consistently improves the performance of various open VLMs on FineBench.
+              </p>
+              <p>
+                FineBench provides a rigorous testbed for future research into fine-grained human-centric video understanding, while FineAgent offers a practical approach to enhance such reasoning in current VLMs.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Key statistics</h2>
+        <div class="content">
+          <ul>
+            <li><strong>199,420</strong> multiple-choice QA pairs across <strong>64</strong> long-form videos (~15 minutes each)</li>
+            <li>Average ~3,116 questions per video</li>
+            <li>Dense spatial and temporal grounding; categories: person movement, person interaction, object manipulation</li>
+          </ul>
+        </div>
+
+        <h2 class="title is-3">Quantitative results</h2>
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <h3 class="title is-5">Model performance (radar)</h3>
+            <img src="../static/images/finebench/model_performance_radar_3.jpg" alt="Model performance (radar)" width="100%" height="360">
+            </object>
+          </div>
+          <div class="column is-half">
+            <h3 class="title is-5">Accuracy vs. frames</h3>
+            <img src="../static/images/finebench/model_accuracy_vs_frames.jpg" alt="Accuracy vs. frames" width="100%" height="360">
+            </object>
+          </div>
+        </div>
+
+        <h2 class="title is-3">Qualitative results - VLMs Failure</h2>
+        <div class="content has-text-centered">
+          <img src="../static/images/finebench/Qualres_v1.png" alt="Qualitative examples" />
+        </div>
+
+        <h2 class="title is-3">FineAgent Improves Existing VLMs</h2>
+        <div class="content has-text-centered">
+          <img src="../static/images/finebench/finebench_qual.png" alt="Comparison" width="100%" height="420">
+        </div>
+
+        <h2 class="title is-3">Leaderboard &amp; Evaluation</h2>
+        <div class="content">
+          <p>The evaluation code and scripts to reproduce our results are available at <a href="https://github.com/joslefaure/FineBench_eval">github.com/joslefaure/FineBench_eval</a>. Below is the main results table from the paper (subset and full-dataset evaluations).</p>
+
+          <div class="table-container">
+            <table class="table is-fullwidth is-striped is-hoverable">
+              <caption><strong>Performance of 15 Vision-Language Models (VLMs) on FineBench.</strong> Proprietary models evaluated on a representative subset (7 videos, 20,143 questions) are shown first. Best open-model full-dataset score is <strong>bolded</strong> and second-best is <u>underlined</u>.</caption>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Size</th>
+                  <th>P. Movement</th>
+                  <th>P. Interaction</th>
+                  <th>Obj. Manipulation</th>
+                  <th>Avg.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Random Choice</td><td>--</td><td>25.0</td><td>25.0</td><td>25.0</td><td>25.0</td></tr>
+                <tr class="is-selected"><td colspan="6"><em>Subset Evaluation</em></td></tr>
+                <tr><td>GPT-4o (2024/08/26)</td><td>--</td><td>70.9</td><td>73.9</td><td>84.4</td><td>74.3</td></tr>
+                <tr><td>GPT-5-mini (2025/08/07)</td><td>--</td><td><strong>75.9</strong></td><td><strong>75.3</strong></td><td>85.3</td><td><strong>77.4</strong></td></tr>
+                <tr><td>Gemini-1.5-Flash</td><td>--</td><td>71.2</td><td>66.8</td><td>81.9</td><td>71.6</td></tr>
+                <tr><td>Gemini-2.0-Flash</td><td>--</td><td><strong>75.9</strong></td><td>68.7</td><td><strong>86.3</strong></td><td>75.2</td></tr>
+                <tr><td>SmolVLM</td><td>2B</td><td>48.5</td><td>48.0</td><td>80.0</td><td>53.9</td></tr>
+                <tr><td>MiniCPM-2.6</td><td>8B</td><td>49.5</td><td>57.4</td><td>84.8</td><td>58.4</td></tr>
+                <tr><td>mPlugOwl-3</td><td>7B</td><td>47.9</td><td>55.8</td><td>84.0</td><td>56.6</td></tr>
+
+                <tr class="is-selected"><td colspan="6"><em>Full Dataset Evaluation</em></td></tr>
+                <tr><td>InternVL-2.5</td><td>1B</td><td>33.8</td><td>40.2</td><td><strong>79.6</strong></td><td>44.1</td></tr>
+                <tr><td>SmolVLM</td><td>2B</td><td>47.9</td><td>50.5</td><td>71.0</td><td>52.9</td></tr>
+                <tr><td>Qwen2.5-VL</td><td>3B</td><td>58.0</td><td>57.5</td><td>73.2</td><td>60.5</td></tr>
+                <tr><td>BLIP-3</td><td>4B</td><td>34.3</td><td>58.6</td><td>64.9</td><td>48.2</td></tr>
+                <tr><td>InternVL-2.5</td><td>4B</td><td>61.4</td><td>58.6</td><td>78.1</td><td>63.3</td></tr>
+                <tr><td>mPlugOwl-2</td><td>7B</td><td>57.6</td><td>49.2</td><td><u>78.5</u></td><td>58.3</td></tr>
+                <tr><td>mPlugOwl-3</td><td>7B</td><td>48.9</td><td>54.8</td><td>75.2</td><td>55.6</td></tr>
+                <tr><td>MiniCPM-2.6</td><td>8B</td><td>56.2</td><td>56.5</td><td>72.8</td><td>59.2</td></tr>
+                <tr><td>LLaVA-OV</td><td>7B</td><td>53.3</td><td>60.4</td><td>69.6</td><td>58.6</td></tr>
+                <tr><td>InternVL-2.5</td><td>8B</td><td><u>66.8</u></td><td><u>62.1</u></td><td>78.1</td><td><u>67.1</u></td></tr>
+                <tr><td>Qwen2.5-VL</td><td>7B</td><td><strong>70.7</strong></td><td><strong>63.8</strong></td><td>73.9</td><td><strong>68.8</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- <h2 class="title is-3">How to run</h2>
+        <div class="content">
+          <pre><code>git clone https://github.com/joslefaure/FineBench_eval.git
+cd FineBench_eval
+pip install -r requirements.txt
+python run_eval.py --dataset "hf:FINEBENCH/FineBench" --model MODEL_NAME --output results.json
+          </code></pre>
+        </div> -->
+      </div>
+    </section>
+
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@misc{faure2026finebench,
+  title={FineBench: Benchmarking and Enhancing Vision-Language Models for Fine-grained Human Activity Understanding},
+  author={Gueter Josmy Faure and Min-Hung Chen and Jia-Fong Yeh and Hung-Ting Su and Winston H. Hsu},
+  year={2026},
+  note={VidLLMs'2026 (CVPR Workshop)},
+  url={https://joslefaure.github.io/assets/html/finebench.html},
+}
+        </code></pre>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <a class="icon-link" href="https://joslefaure.github.io/"><i class="fas fa-home"></i></a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
