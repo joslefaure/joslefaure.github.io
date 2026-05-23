@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-FineBench accepted to the CVPR Workshop on Video Large Language Models (VidLLMs 2026)! 🎉
+**FineBench: Benchmarking and Enhancing Vision-Language Models for Fine-grained Human Activity Understanding** is accepted to the CVPR 2026 Workshop on Video Large Language Models (VidLLMs 2026)! 🎉
