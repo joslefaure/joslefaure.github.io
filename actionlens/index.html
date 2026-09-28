@@ -1,745 +1,215 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="description" content="ActionLens — Diagnosing Spatial-Temporal Binding Failures in Vision-Language Models" />
+    <meta name="keywords" content="ActionLens, Video LLMs, spatial-temporal binding, benchmark, vision-language models" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ActionLens: Diagnosing Spatial-Temporal Binding Failures in Vision-Language Models</title>
-    <meta name="description" content="ActionLens is a diagnostic benchmark of 6,701 multiple-choice video questions decomposing spatial-temporal binding across 5 targeted capabilities with 100% programmatic ground truth." />
-    <meta name="keywords" content="ActionLens, Video-LLMs, Spatial-Temporal Binding, Computer Vision, Benchmark, Video Understanding, Multimodal AI" />
-    
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="ActionLens: Diagnosing Spatial-Temporal Binding Failures in Vision-Language Models" />
-    <meta property="og:description" content="ActionLens reveals that current VLMs systematically fail at spatial-temporal binding: associating the right action with the right actor at the right moment." />
-    <meta property="og:image" content="../assets/static/images/actionlens/teaser.png" />
-    <meta property="og:type" content="website" />
+    <title>ActionLens</title>
 
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&family=Castoro:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/static/css/bulma.min.css" />
+    <link rel="stylesheet" href="../assets/static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="../assets/static/css/bulma-slider.min.css" />
     <link rel="stylesheet" href="../assets/static/css/fontawesome.all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
     <link rel="stylesheet" href="../assets/static/css/index.css" />
     <link rel="icon" href="../assets/img/favicon_ai.jpeg" />
 
+    <script defer src="../assets/static/js/fontawesome.all.min.js"></script>
+    <script src="../assets/static/js/bulma-carousel.min.js"></script>
+    <script src="../assets/static/js/bulma-slider.min.js"></script>
+    <script src="../assets/static/js/index.js"></script>
+
     <style>
-      :root {
-        --primary-accent: #2563eb;
-        --primary-dark: #1e293b;
-        --human-gold: #f59e0b;
-        --correct-green: #10b981;
-        --error-red: #ef4444;
-        --bg-subtle: #f8fafc;
-        --border-subtle: #e2e8f0;
-      }
-      body {
-        font-family: 'Noto Sans', sans-serif;
-        color: #334155;
-        background-color: #ffffff;
-      }
-      h1, h2, h3, h4, .title {
-        font-family: 'Google Sans', sans-serif;
-        color: var(--primary-dark);
-      }
-      .hero-body {
-        padding: 3rem 1.5rem 2rem 1.5rem;
-      }
-      .publication-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        line-height: 1.25;
-        margin-bottom: 0.75rem !important;
-      }
-      .publication-subtitle {
-        font-size: 1.35rem;
-        color: #64748b;
-        font-weight: 500;
-        margin-bottom: 1.5rem !important;
-      }
-      .publication-authors {
+      .mcq-opt {
+        padding: 0.65rem 0.9rem;
         margin-bottom: 0.5rem;
-      }
-      .author-block {
-        font-size: 1.1rem;
-        margin-right: 0.75rem;
-      }
-      .author-block a {
-        color: #1e293b;
-        font-weight: 600;
-        transition: color 0.2s;
-      }
-      .author-block a:hover {
-        color: var(--primary-accent);
-      }
-      .affiliations {
-        font-size: 0.95rem;
-        color: #64748b;
-        margin-bottom: 1.5rem;
-      }
-      .pub-pills {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-        justify-content: center;
-        margin-bottom: 2rem;
-      }
-      .pub-pills .button {
-        font-weight: 500;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        transition: all 0.2s ease;
-      }
-      .pub-pills .button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-      }
-
-      /* Metrics ribbon */
-      .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 1rem;
-        margin: 1.5rem 0 2.5rem 0;
-      }
-      .stat-card {
-        background: #f8fafc;
-        border: 1px solid var(--border-subtle);
-        border-radius: 12px;
-        padding: 1.1rem 0.8rem;
-        text-align: center;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      .stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      }
-      .stat-val {
-        font-size: 1.75rem;
-        font-weight: 700;
-        font-family: 'Google Sans', sans-serif;
-        color: var(--primary-accent);
-        line-height: 1.1;
-      }
-      .stat-lbl {
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        color: #64748b;
-        letter-spacing: 0.04em;
-        margin-top: 0.35rem;
-      }
-
-      /* Teaser graphic section */
-      .teaser-box {
-        background: #ffffff;
-        border: 1px solid var(--border-subtle);
-        border-radius: 16px;
-        padding: 1.25rem;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-        margin-bottom: 3rem;
-      }
-      .teaser-box img {
-        border-radius: 12px;
-        width: 100%;
-        display: block;
-      }
-      .teaser-caption {
-        font-size: 0.95rem;
-        color: #475569;
-        margin-top: 1rem;
-        line-height: 1.6;
-      }
-
-      /* Section header */
-      .section-heading {
-        margin-bottom: 2rem;
-        text-align: center;
-      }
-      .section-heading .tag {
-        font-weight: 700;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        margin-bottom: 0.5rem;
-      }
-      .section-heading h2 {
-        font-size: 2rem;
-        font-weight: 700;
-      }
-      .section-heading p {
-        font-size: 1.05rem;
-        color: #64748b;
-        max-width: 750px;
-        margin: 0.5rem auto 0 auto;
-      }
-
-      /* Diagnostic Explorer Tabs & Layout */
-      .diag-nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
-        margin-bottom: 1.75rem;
-      }
-      .diag-btn {
-        background: #f1f5f9;
-        color: #334155;
-        border: 1px solid transparent;
-        padding: 0.65rem 1.15rem;
-        border-radius: 9999px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-      .diag-btn:hover {
-        background: #e2e8f0;
-      }
-      .diag-btn.is-active {
-        background: var(--primary-accent);
-        color: #ffffff;
-        box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
-      }
-      .sample-viewer-card {
-        background: #ffffff;
-        border: 1px solid var(--border-subtle);
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      }
-      .video-wrapper {
-        position: relative;
-        background: #000;
-        border-radius: 12px;
-        overflow: hidden;
-        aspect-ratio: 720 / 480;
-      }
-      .video-wrapper video {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        display: block;
-      }
-      .sample-switch-bar {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: 0.75rem;
-        justify-content: center;
-      }
-      .sample-switch-btn {
-        font-size: 0.8rem;
-        font-weight: 600;
-        padding: 0.35rem 0.85rem;
         border-radius: 6px;
-        border: 1px solid var(--border-subtle);
-        background: #ffffff;
-        cursor: pointer;
-        transition: all 0.15s;
-      }
-      .sample-switch-btn.active {
-        background: #0f172a;
-        color: #fff;
-        border-color: #0f172a;
-      }
-
-      /* MCQ Option Cards */
-      .mcq-container {
-        display: flex;
-        flex-direction: column;
-        gap: 0.65rem;
-        margin: 1.25rem 0;
-      }
-      .mcq-option {
-        display: flex;
-        align-items: flex-start;
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
-        border: 1.5px solid var(--border-subtle);
-        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        background: #fff;
         font-size: 0.93rem;
         line-height: 1.45;
-        transition: all 0.2s;
+        display: flex;
+        align-items: flex-start;
       }
-      .mcq-option .opt-label {
-        font-weight: 700;
-        margin-right: 0.75rem;
-        min-width: 1.4rem;
-        color: #64748b;
-      }
-      .mcq-option .opt-content {
-        flex-grow: 1;
-      }
-      .mcq-option .opt-tag {
-        font-size: 0.75rem;
-        font-weight: 700;
-        padding: 0.2rem 0.55rem;
-        border-radius: 4px;
-        margin-left: 0.75rem;
-        white-space: nowrap;
-      }
-      .mcq-option.is-correct {
+      .mcq-opt.correct {
         border-color: #10b981;
         background-color: #f0fdf4;
       }
-      .mcq-option.is-correct .opt-label {
-        color: #10b981;
-      }
-      .mcq-option.is-correct .opt-tag {
-        background: #10b981;
-        color: #ffffff;
-      }
-      .mcq-option.is-trap {
-        border-color: #fca5a5;
+      .mcq-opt.trap {
+        border-color: #f87171;
         background-color: #fef2f2;
       }
-      .mcq-option.is-trap .opt-label {
-        color: #ef4444;
-      }
-      .mcq-option.is-trap .opt-tag {
-        background: #ef4444;
-        color: #ffffff;
-      }
-      .mcq-option.is-reversal {
-        border-color: #fdba74;
+      .mcq-opt.reversal {
+        border-color: #fb923c;
         background-color: #fff7ed;
       }
-      .mcq-option.is-reversal .opt-tag {
-        background: #f97316;
-        color: #ffffff;
-      }
-
-      .challenge-callout {
-        background: #f8fafc;
-        border-left: 4px solid var(--primary-accent);
-        border-radius: 4px;
-        padding: 0.9rem 1.1rem;
-        font-size: 0.9rem;
-        color: #475569;
-        margin-top: 1rem;
-      }
-
-      /* Finding Cards */
-      .finding-card {
-        background: #ffffff;
-        border: 1px solid var(--border-subtle);
-        border-radius: 14px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-      .finding-card h3 {
-        font-size: 1.25rem;
+      .opt-tag {
+        font-size: 0.72rem;
         font-weight: 700;
-        margin-bottom: 0.75rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        padding: 0.15rem 0.45rem;
+        border-radius: 4px;
+        margin-left: auto;
+        white-space: nowrap;
       }
-      .finding-img-wrap {
-        background: #f8fafc;
+      .opt-tag.correct {
+        background: #10b981;
+        color: #fff;
+      }
+      .opt-tag.trap {
+        background: #ef4444;
+        color: #fff;
+      }
+      .opt-tag.reversal {
+        background: #f97316;
+        color: #fff;
+      }
+      .diag-btn {
+        margin: 0.2rem;
+        font-size: 0.85rem;
+      }
+      .sample-btn {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.7rem;
+        border-radius: 4px;
+        border: 1px solid #cbd5e1;
+        background: #fff;
+        cursor: pointer;
+      }
+      .sample-btn.is-active {
+        background: #334155;
+        color: #fff;
+        border-color: #334155;
+      }
+      .video-box {
         border-radius: 8px;
         overflow: hidden;
-        border: 1px solid #f1f5f9;
-        margin-bottom: 1rem;
-        text-align: center;
+        background: #000;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       }
-      .finding-img-wrap img {
-        max-height: 280px;
+      .video-box video {
         width: 100%;
-        object-fit: contain;
-        display: inline-block;
+        display: block;
       }
-
-      /* Leaderboard */
-      .leaderboard-filters {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-        justify-content: center;
-        margin-bottom: 1.25rem;
-      }
-      .filter-btn {
-        background: #ffffff;
-        border: 1px solid var(--border-subtle);
-        border-radius: 6px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        padding: 0.4rem 0.85rem;
-        color: #475569;
-        cursor: pointer;
-        transition: all 0.15s;
-      }
-      .filter-btn:hover {
-        background: #f1f5f9;
-      }
-      .filter-btn.active {
-        background: var(--primary-dark);
-        color: #ffffff;
-        border-color: var(--primary-dark);
-      }
-      .table-box {
-        border-radius: 12px;
-        border: 1px solid var(--border-subtle);
-        overflow-x: auto;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.04);
-      }
-      .table.is-actionlens {
-        font-size: 0.9rem;
-        margin-bottom: 0;
-      }
-      .table.is-actionlens thead th {
-        background: #0f172a;
-        color: #ffffff;
-        font-family: 'Google Sans', sans-serif;
-        font-weight: 600;
-        border: none;
-        vertical-align: middle;
-        cursor: pointer;
-        user-select: none;
-      }
-      .table.is-actionlens thead th:hover {
-        background: #1e293b;
-      }
-      .row-human {
-        background: #fffbeb !important;
-        font-weight: 700;
-      }
-      .row-human td {
-        color: #92400e !important;
-      }
-      .row-baseline {
-        background: #f8fafc !important;
-        color: #64748b;
-      }
-      .best-val {
-        font-weight: 700;
-        color: #1e3a8a;
-        background: #dbeafe;
-        border-radius: 4px;
-        padding: 0.1rem 0.35rem;
-      }
-
-      /* Code block */
-      .code-container {
-        position: relative;
-        background: #0f172a;
-        border-radius: 10px;
-        padding: 1.25rem;
-        color: #e2e8f0;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.88rem;
-        overflow-x: auto;
-      }
-      .copy-btn {
-        position: absolute;
-        top: 0.75rem;
-        right: 0.75rem;
-        background: #1e293b;
-        color: #cbd5e1;
-        border: 1px solid #334155;
-        border-radius: 6px;
-        font-size: 0.75rem;
-        padding: 0.3rem 0.65rem;
-        cursor: pointer;
-        transition: all 0.15s;
-      }
-      .copy-btn:hover {
-        background: #334155;
-        color: #ffffff;
-      }
-
-      /* Footer */
-      .page-footer {
+      .challenge-box {
         background: #f8fafc;
-        border-top: 1px solid var(--border-subtle);
-        padding: 2.5rem 1.5rem;
-        margin-top: 4rem;
-        font-size: 0.9rem;
-        color: #64748b;
+        border-left: 3px solid #3b82f6;
+        padding: 0.75rem 1rem;
+        font-size: 0.88rem;
+        color: #475569;
+        margin-top: 0.75rem;
+        border-radius: 0 4px 4px 0;
       }
     </style>
   </head>
   <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar is-white is-spaced" role="navigation" aria-label="main navigation" style="box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 99;">
-      <div class="container is-max-desktop">
-        <div class="navbar-brand">
-          <a class="navbar-item font-weight-bold" href="https://joslefaure.github.io/" style="font-weight: 700; color: #0f172a;">
-            <span class="icon mr-1"><i class="fas fa-home"></i></span> Josmy Faure
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center">
+          <a class="navbar-item" href="https://joslefaure.github.io/">
+            <span class="icon">
+              <i class="fas fa-home"></i>
+            </span>
           </a>
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="actionlensNavbar">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-        <div id="actionlensNavbar" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item" href="#overview">Overview</a>
-            <a class="navbar-item" href="#samples">Interactive Samples</a>
-            <a class="navbar-item" href="#findings">Key Findings</a>
-            <a class="navbar-item" href="#comparison">Benchmark Comparison</a>
-            <a class="navbar-item" href="#leaderboard">Leaderboard</a>
-            <a class="navbar-item" href="#reproducibility">Quick Start</a>
-          </div>
-          <div class="navbar-end">
-            <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link">More Research</a>
-              <div class="navbar-dropdown is-right is-boxed">
-                <a class="navbar-item" href="https://joslefaure.github.io/actionlens"><strong>ActionLens</strong></a>
-                <a class="navbar-item" href="https://joslefaure.github.io/assets/html/finebench.html">FineBench</a>
-                <a class="navbar-item" href="https://joslefaure.github.io/assets/html/moviecore.html">MovieCORE</a>
-                <a class="navbar-item" href="https://joslefaure.github.io/assets/html/hermes.html">HERMES</a>
-              </div>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> More Research </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="https://joslefaure.github.io/actionlens">ActionLens</a>
+              <a class="navbar-item" href="https://joslefaure.github.io/assets/html/finebench.html">FineBench</a>
+              <a class="navbar-item" href="https://joslefaure.github.io/assets/html/moviecore.html">MovieCORE</a>
+              <a class="navbar-item" href="https://joslefaure.github.io/assets/html/hermes.html">HERMES</a>
             </div>
           </div>
         </div>
       </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
       <div class="hero-body">
-        <div class="container is-max-desktop has-text-centered">
-          <div class="tags has-addons is-centered mb-3">
-            <span class="tag is-dark is-medium" style="background: #1e293b;"><i class="fas fa-bullseye mr-2"></i> Diagnostic Benchmark</span>
-            <span class="tag is-info is-light is-medium" style="font-weight: 600;">Under Review</span>
-          </div>
-
-          <h1 class="title publication-title">ActionLens</h1>
-          <h2 class="subtitle publication-subtitle">Diagnosing Spatial-Temporal Binding Failures in Vision-Language Models</h2>
-
-          <!-- Authors -->
-          <div class="is-size-5 publication-authors mb-2">
-            <span class="author-block"><a href="https://joslefaure.github.io/">Gueter Josmy Faure</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="https://minhungchen.netlify.app/">Min-Hung Chen</a><sup>2</sup>,</span>
-            <span class="author-block"><a href="#">Hao Ping Wang</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="#">Timothée Lardy</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="#">Hung-Ting Su</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="https://winstonhsu.info/">Winston H. Hsu</a><sup>1</sup></span>
-          </div>
-          <div class="affiliations">
-            <span><sup>1</sup>National Taiwan University</span> &nbsp;•&nbsp;
-            <span><sup>2</sup>NVIDIA</span>
-          </div>
-
-          <!-- Buttons -->
-          <div class="pub-pills">
-            <a href="#" class="button is-dark is-rounded">
-              <span class="icon"><i class="ai ai-arxiv"></i></span>
-              <span>arXiv</span>
-            </a>
-            <a href="https://github.com/joslefaure/lmms-eval/tree/add-actionlens-dataset" class="button is-dark is-rounded" target="_blank" rel="noopener">
-              <span class="icon"><i class="fab fa-github"></i></span>
-              <span>Code & Eval</span>
-            </a>
-            <a href="https://anonymous.4open.science/r/lmms-eval-2276" class="button is-dark is-rounded" target="_blank" rel="noopener">
-              <span class="icon"><i class="fas fa-database"></i></span>
-              <span>Dataset (Anonymous Repo)</span>
-            </a>
-            <a href="#samples" class="button is-link is-light is-rounded">
-              <span class="icon"><i class="fas fa-play-circle"></i></span>
-              <span>Explore Samples</span>
-            </a>
-            <a href="#leaderboard" class="button is-info is-light is-rounded">
-              <span class="icon"><i class="fas fa-trophy"></i></span>
-              <span>Leaderboard (20 VLMs)</span>
-            </a>
-          </div>
-
-          <!-- Metric Ribbon -->
-          <div class="stat-grid">
-            <div class="stat-card">
-              <div class="stat-val">6,701</div>
-              <div class="stat-lbl">Questions</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-val">5</div>
-              <div class="stat-lbl">Targeted Diagnostics</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-val">20</div>
-              <div class="stat-lbl">VLMs Benchmarked</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-val">100%</div>
-              <div class="stat-lbl">Deterministic GT</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-val" style="color: var(--human-gold);">91.0%</div>
-              <div class="stat-lbl">Human Reference</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-val" style="color: #64748b;">25.4%</div>
-              <div class="stat-lbl">Random Chance</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Teaser Section -->
-    <section class="section pt-0" id="overview">
-      <div class="container is-max-desktop">
-        <div class="teaser-box">
-          <img src="../assets/static/images/actionlens/teaser.png" alt="ActionLens Teaser - Spatial-Temporal Binding Failures in VLMs" />
-          <div class="teaser-caption">
-            <strong>ActionLens asks video questions humans answer in seconds.</strong>
-            State-of-the-art vision-language models score above 80% on scene-level benchmarks like VideoMME, yet they systematically fail at
-            <em>spatial-temporal binding</em>: associating the right action with the right actor at the right moment.
-            ActionLens decomposes this fundamental capability into five targeted diagnostics with 100% deterministic ground truth derived from
-            1.58 million per-second annotations in AVA v2.2.
-          </div>
-        </div>
-
-        <!-- Punchy Motivation Cards -->
-        <div class="columns is-multiline">
-          <div class="column is-6">
-            <div class="card p-5" style="border-radius: 12px; border: 1px solid var(--border-subtle); height: 100%;">
-              <h3 class="title is-5" style="color: #0f172a;"><i class="fas fa-microscope text-primary mr-2" style="color: var(--primary-accent);"></i> A Diagnostic Probe, Not Just a Leaderboard</h3>
-              <p style="font-size: 0.95rem; line-height: 1.6; color: #475569;">
-                Standard benchmarks measure <em>scene-level recognition</em>: identifying what is broadly happening or naming objects.
-                ActionLens isolates specific capabilities: detecting when an action changes, resolving who did what in multi-person scenes,
-                recognizing simultaneous multitasking, tracking asymmetric roles, and inferring 3D gaze direction.
-              </p>
-            </div>
-          </div>
-          <div class="column is-6">
-            <div class="card p-5" style="border-radius: 12px; border: 1px solid var(--border-subtle); height: 100%;">
-              <h3 class="title is-5" style="color: #0f172a;"><i class="fas fa-shield-alt mr-2" style="color: #10b981;"></i> 14 Rounds of Human Quality Engineering</h3>
-              <p style="font-size: 0.95rem; line-height: 1.6; color: #475569;">
-                Every ground truth answer is derived deterministically from dense AVA annotations—<strong>zero language model hallucination</strong>.
-                Through 14 iterative human validation rounds, question clarity rose from 53% to <strong>91.0% human accuracy</strong>, defending against
-                binding traps, temporal reversals, and language shortcuts.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Interactive Diagnostic Explorer (The Star Feature) -->
-    <section class="section" id="samples" style="background: var(--bg-subtle);">
-      <div class="container is-max-desktop">
-        <div class="section-heading">
-          <span class="tag is-info is-light">Interactive Explorer</span>
-          <h2>Explore the 5 Core Diagnostics</h2>
-          <p>Click on any diagnostic below to view actual video clips, questions, multiple-choice options, and model failure modes.</p>
-        </div>
-
-        <!-- Diagnostic Tabs -->
-        <div class="diag-nav" id="diagNav">
-          <button class="diag-btn is-active" data-diag="d1"><i class="fas fa-exchange-alt mr-1"></i> D1 · Transition Sensitivity</button>
-          <button class="diag-btn" data-diag="d2"><i class="fas fa-user-friends mr-1"></i> D2 · Actor Disambiguation</button>
-          <button class="diag-btn" data-diag="d3"><i class="fas fa-layer-group mr-1"></i> D3 · Concurrent Binding</button>
-          <button class="diag-btn" data-diag="d4"><i class="fas fa-comments mr-1"></i> D4 · Interaction Reasoning</button>
-          <button class="diag-btn" data-diag="d5"><i class="fas fa-eye mr-1"></i> D5 · Gaze Detection</button>
-        </div>
-
-        <!-- Interactive Viewer Card -->
-        <div class="sample-viewer-card p-5">
-          <div class="columns is-vcentered">
-            <!-- Left: Video Player -->
-            <div class="column is-6">
-              <div class="video-wrapper">
-                <video id="diagVideo" controls autoplay loop muted playsinline src="../assets/static/videos/actionlens/d1_sample_1.mp4">
-                  Your browser does not support HTML5 video.
-                </video>
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">ActionLens</h1>
+              <h2 class="title is-2">Diagnosing Spatial-Temporal Binding Failures in Vision-Language Models</h2>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"> <a href="https://joslefaure.github.io/">Gueter Josmy Faure</a><sup>1</sup>, </span>
+                <span class="author-block"> <a href="https://minhungchen.netlify.app/">Min-Hung Chen</a><sup>2</sup>, </span>
+                <span class="author-block"> <a href="#">Hao Ping Wang</a><sup>1</sup>, </span>
+                <span class="author-block"> <a href="#">Timothée Lardy</a><sup>1</sup>, </span>
+                <span class="author-block"> <a href="#">Hung-Ting Su</a><sup>1</sup>, </span>
+                <span class="author-block"> <a href="https://winstonhsu.info/">Winston H. Hsu</a><sup>1</sup></span>
               </div>
-              <div class="sample-switch-bar">
-                <button class="sample-switch-btn active" id="btnSample1" onclick="switchSample(0)">Sample 1</button>
-                <button class="sample-switch-btn" id="btnSample2" onclick="switchSample(1)">Sample 2</button>
-              </div>
-            </div>
-
-            <!-- Right: QA Details -->
-            <div class="column is-6">
-              <div class="d-flex align-items-center mb-2">
-                <span class="tag is-primary is-light" id="diagBadge" style="font-weight: 700;">194 Questions</span>
-                <span class="tag is-light ml-2" id="sampleName">Sample 1: Grabbing to Lifting</span>
-              </div>
-              <h3 class="title is-5 mb-3" id="sampleQuestion" style="line-height: 1.4;">What action transition does the person in the red box undergo during this clip?</h3>
-
-              <!-- Dynamic Options -->
-              <div class="mcq-container" id="sampleOptions">
-                <!-- Injected via JavaScript -->
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"><sup>1</sup>National Taiwan University, </span>
+                <span class="author-block"><sup>2</sup>NVIDIA</span>
               </div>
 
-              <!-- Challenge Box -->
-              <div class="challenge-callout" id="sampleAnalysis">
-                <!-- Injected via JavaScript -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Key Empirical Findings -->
-    <section class="section" id="findings">
-      <div class="container is-max-desktop">
-        <div class="section-heading">
-          <span class="tag is-warning is-light">Empirical Analysis</span>
-          <h2>Key Diagnostic Findings</h2>
-          <p>ActionLens isolates five critical failure mechanisms that remain invisible on general video benchmarks.</p>
-        </div>
-
-        <div class="columns is-multiline">
-          <!-- Finding 1 -->
-          <div class="column is-6">
-            <div class="finding-card">
-              <h3><span class="tag is-danger is-light">Finding 1</span> The Binding Trap</h3>
-              <div class="finding-img-wrap">
-                <img src="../assets/static/images/actionlens/binding_trap_rate.png" alt="Binding Trap Hit Rate on D2" />
-              </div>
-              <p style="font-size: 0.92rem; line-height: 1.6; color: #475569;">
-                In two-person scenes, when VLMs make an error, up to <strong>53%</strong> of their mistakes select the <em>other</em> person's action!
-                Models successfully recognize actions occurring anywhere in the scene, but fail to bind the action to the queried person.
-              </p>
-            </div>
-          </div>
-
-          <!-- Finding 2 -->
-          <div class="column is-6">
-            <div class="finding-card">
-              <h3><span class="tag is-info is-light">Finding 2</span> Visual Grounding Deficit</h3>
-              <div class="finding-img-wrap">
-                <img src="../assets/static/images/actionlens/coord_ablation_combined.png" alt="Box vs Static Coordinate References" />
-              </div>
-              <p style="font-size: 0.92rem; line-height: 1.6; color: #475569;">
-                Replacing tracked visual bounding boxes with static text coordinates drops accuracy by up to <strong>19.2%</strong> on actor disambiguation.
-                Relational descriptions recover part of this gap, proving that numeric coordinate parsing is a major hurdle for current VLMs.
-              </p>
-            </div>
-          </div>
-
-          <!-- Finding 3 -->
-          <div class="column is-6">
-            <div class="finding-card">
-              <h3><span class="tag is-success is-light">Finding 3</span> Frame Sweeps & Temporal Binding</h3>
-              <div class="finding-img-wrap">
-                <img src="../assets/static/images/actionlens/frame_sweep_heatmap.png" alt="Frame Sweep Heatmap" />
-              </div>
-              <p style="font-size: 0.92rem; line-height: 1.6; color: #475569;">
-                Scaling visual input from 1 to 64 frames provides substantial gains on person-binding diagnostics (+25.3% on D2 for Qwen3.5),
-                confirming that spatial-temporal binding demands temporal continuity rather than single-frame static shortcuts.
-              </p>
-            </div>
-          </div>
-
-          <!-- Finding 4 -->
-          <div class="column is-6">
-            <div class="finding-card">
-              <h3><span class="tag is-purple is-light" style="background:#f3e8ff; color:#7e22ce;">Finding 4</span> Gaze Collapses Near Chance</h3>
-              <div class="finding-img-wrap p-4" style="background: #ffffff; display: flex; align-items: center; justify-content: center;">
-                <div style="text-align: center; padding: 1.5rem 0;">
-                  <div style="font-size: 2.8rem; font-weight: 700; color: #92400e; font-family: 'Google Sans', sans-serif;">89.6% vs 25.8%</div>
-                  <div style="font-size: 0.85rem; font-weight: 600; color: #64748b; text-transform: uppercase;">Human vs VLM Gaze Accuracy</div>
-                  <p class="mt-2" style="font-size: 0.9rem; color: #475569;">Random chance is 25.0%. Even frontier models struggle with 3D gaze and head orientation.</p>
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <span class="link-block">
+                    <a href="#" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="ai ai-arxiv"></i></span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href="https://github.com/joslefaure/lmms-eval/tree/add-actionlens-dataset" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                      <span class="icon"><i class="fab fa-github"></i></span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                  <span class="link-block">
+                    <a href="https://huggingface.co/datasets/anonymous-dataset-submission/actionlens" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                      <span class="icon">
+                        <img src="https://huggingface.co/front/assets/huggingface_logo.svg" alt="Hugging Face Logo" width="20" height="20">
+                      </span>
+                      <span>Dataset</span>
+                    </a>
+                  </span>
                 </div>
               </div>
-              <p style="font-size: 0.92rem; line-height: 1.6; color: #475569;">
-                While human raters achieve 89.6% on gaze tracking, state-of-the-art models hover between 25% and 47%.
-                Gaze detection requires fine-grained 3D head and eye orientation tracking that current visual tokenizers fail to preserve.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <img src="../assets/static/images/actionlens/teaser.png" alt="Teaser image for ActionLens" />
+          <h2 class="subtitle has-text-centered">ActionLens evaluates whether vision-language models can bind actions to the right actor across spatial and temporal dimensions.</h2>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Video question answering systems often select frames or score scene-level recognition independently, yet downstream answerers must bind the right action to the right person at the right moment. Current vision-language models (VLMs) achieve high scores on general video benchmarks, but systematically fail at spatial-temporal binding.
+              </p>
+              <p>
+                We introduce <strong>ActionLens</strong>, a diagnostic benchmark of 6,701 multiple-choice questions that decomposes spatial-temporal binding into five targeted capabilities: transition detection (D1), actor-specific identification (D2), concurrent action binding (D3), directed interaction reasoning (D4), and gaze detection (D5). Ground-truth answers are derived deterministically from 1.58 million per-second, per-person annotations without language model generation.
+              </p>
+              <p>
+                Evaluating 20 VLMs reveals a substantial human–model gap: humans achieve 91.0% pooled accuracy, whereas the leading open model reaches 65.6%. In multi-person scenes, up to 53% of model errors succumb to the binding trap—attributing the wrong actor's action. Furthermore, removing visual bounding box overlays in favor of text coordinates degrades accuracy by up to 19.2% on actor disambiguation.
+              </p>
+              <p>
+                ActionLens provides a reproducible diagnostic probe to evaluate and isolate fine-grained binding failures across current and future video architectures.
               </p>
             </div>
           </div>
@@ -747,361 +217,672 @@
       </div>
     </section>
 
-    <!-- Benchmark Comparison Section -->
-    <section class="section" id="comparison" style="background: #ffffff;">
+    <section class="section" id="results">
       <div class="container is-max-desktop">
-        <div class="section-heading">
-          <span class="tag is-primary is-light">Differentiators</span>
-          <h2>Benchmark Comparison</h2>
-          <p>ActionLens is the only video benchmark providing per-person spatial grounding, programmatic derivation, and iterative human validation.</p>
+        <h2 class="title is-3">Key statistics</h2>
+        <div class="content">
+          <ul>
+            <li><strong>6,701</strong> multiple-choice questions with 100% deterministic ground truth derived from dense AVA annotations</li>
+            <li><strong>5 targeted diagnostics</strong>: Transition Sensitivity (194), Actor Disambiguation (2,000), Concurrent Action Binding (2,000), Directed Interaction Reasoning (1,611), and Gaze Detection (896)</li>
+            <li><strong>20 vision-language models</strong> evaluated from 4B to 38B parameters alongside proprietary models</li>
+            <li><strong>91.0%</strong> pooled human reference vs. <strong>25.4%</strong> random guess baseline</li>
+          </ul>
         </div>
 
-        <div class="table-box">
-          <table class="table is-fullwidth is-striped is-hoverable is-actionlens">
-            <thead>
-              <tr>
-                <th>Benchmark</th>
-                <th class="has-text-centered">QA Pairs</th>
-                <th class="has-text-centered">Clips</th>
-                <th class="has-text-centered">Per-Sec Temporal GT</th>
-                <th class="has-text-centered">Per-Person Spatial GT</th>
-                <th class="has-text-centered">Multi-Person Compositional</th>
-                <th class="has-text-centered">Iterated Human Audit</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>VideoMME</strong></td>
-                <td class="has-text-centered">2,700</td>
-                <td class="has-text-centered">900</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-              </tr>
-              <tr>
-                <td><strong>MVBench</strong></td>
-                <td class="has-text-centered">4,000</td>
-                <td class="has-text-centered">—</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered"><i class="fas fa-circle-notch text-warning"></i> Partial</td>
-                <td class="has-text-centered text-muted">—</td>
-              </tr>
-              <tr>
-                <td><strong>EgoSchema</strong></td>
-                <td class="has-text-centered">5,031</td>
-                <td class="has-text-centered">5,031</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-              </tr>
-              <tr>
-                <td><strong>STAR</strong></td>
-                <td class="has-text-centered">60,000</td>
-                <td class="has-text-centered">22,000</td>
-                <td class="has-text-centered"><i class="fas fa-circle-notch text-warning"></i> Partial</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-              </tr>
-              <tr>
-                <td><strong>PerceptionTest</strong></td>
-                <td class="has-text-centered">11,619</td>
-                <td class="has-text-centered">691</td>
-                <td class="has-text-centered"><i class="fas fa-check text-success" style="color:#10b981;"></i></td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered"><i class="fas fa-circle-notch text-warning"></i> Partial</td>
-                <td class="has-text-centered text-muted">—</td>
-              </tr>
-              <tr>
-                <td><strong>TempCompass</strong></td>
-                <td class="has-text-centered">7,540</td>
-                <td class="has-text-centered">500</td>
-                <td class="has-text-centered"><i class="fas fa-check text-success" style="color:#10b981;"></i></td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-                <td class="has-text-centered text-muted">—</td>
-              </tr>
-              <tr style="background: #f0fdf4; font-weight: 700;">
-                <td style="color: #15803d;"><strong>ActionLens (Ours)</strong></td>
-                <td class="has-text-centered" style="color: #15803d;"><strong>6,701</strong></td>
-                <td class="has-text-centered" style="color: #15803d;"><strong>6,701</strong></td>
-                <td class="has-text-centered"><i class="fas fa-check-circle" style="color:#10b981;"></i></td>
-                <td class="has-text-centered"><i class="fas fa-check-circle" style="color:#10b981;"></i></td>
-                <td class="has-text-centered"><i class="fas fa-check-circle" style="color:#10b981;"></i></td>
-                <td class="has-text-centered"><i class="fas fa-check-circle" style="color:#10b981;"></i></td>
-              </tr>
-            </tbody>
-          </table>
+        <h2 class="title is-3">Interactive Diagnostic Samples</h2>
+        <p class="content">Select a diagnostic and sample to view video clips, questions, multiple-choice options, and model error patterns.</p>
+
+        <!-- Diagnostic Navigation -->
+        <div class="buttons is-centered mb-4" id="diagNav">
+          <button class="button is-small is-dark is-rounded diag-btn is-active" data-diag="d1">D1 · Transition Sensitivity</button>
+          <button class="button is-small is-dark is-rounded is-outlined diag-btn" data-diag="d2">D2 · Actor Disambiguation</button>
+          <button class="button is-small is-dark is-rounded is-outlined diag-btn" data-diag="d3">D3 · Concurrent Binding</button>
+          <button class="button is-small is-dark is-rounded is-outlined diag-btn" data-diag="d4">D4 · Interaction Reasoning</button>
+          <button class="button is-small is-dark is-rounded is-outlined diag-btn" data-diag="d5">D5 · Gaze Detection</button>
+        </div>
+
+        <!-- Sample Box -->
+        <div class="box p-5 mb-5">
+          <div class="columns is-vcentered">
+            <div class="column is-6">
+              <div class="video-box mb-2">
+                <video id="diagVideo" controls autoplay loop muted playsinline src="../assets/static/videos/actionlens/d1_sample_1.mp4">
+                  Your browser does not support video playback.
+                </video>
+              </div>
+              <div class="has-text-centered">
+                <button class="sample-btn is-active" id="btnSample1" onclick="switchSample(0)">Sample 1</button>
+                <button class="sample-btn" id="btnSample2" onclick="switchSample(1)">Sample 2</button>
+              </div>
+            </div>
+            <div class="column is-6">
+              <div class="mb-2">
+                <span class="tag is-info is-light" id="diagBadge">194 Questions</span>
+                <span class="is-size-7 has-text-grey ml-2" id="sampleName">Sample 1: Grabbing to Lifting</span>
+              </div>
+              <h4 class="title is-6 mb-3" id="sampleQuestion">What action transition does the person in the red box undergo during this clip?</h4>
+              
+              <div id="sampleOptions">
+                <!-- Options populated by JS -->
+              </div>
+
+              <div class="challenge-box" id="sampleAnalysis">
+                <!-- Analysis populated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="title is-3">Quantitative &amp; Empirical Findings</h2>
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <h3 class="title is-5">The Binding Trap (D2 Actor Disambiguation)</h3>
+            <img src="../assets/static/images/actionlens/binding_trap_rate.png" alt="Binding Trap Hit Rate" width="100%">
+            <p class="is-size-7 has-text-grey mt-1">Percentage of incorrect predictions selecting the other actor's action. Dotted line = conditional random baseline (33.3%).</p>
+          </div>
+          <div class="column is-half">
+            <h3 class="title is-5">Visual Grounding Control (Tracked Box vs Coordinate)</h3>
+            <img src="../assets/static/images/actionlens/coord_ablation_combined.png" alt="Tracked Visual Boxes vs Static Coordinate References" width="100%">
+            <p class="is-size-7 has-text-grey mt-1">Accuracy drop when visual box overlays are replaced by static coordinates, exposing visual grounding dependency.</p>
+          </div>
+        </div>
+
+        <div class="columns is-centered mt-2">
+          <div class="column is-half">
+            <h3 class="title is-5">Reference Interface Control</h3>
+            <img src="../assets/static/images/actionlens/reference_interface_control.png" alt="Reference Interface Control" width="100%">
+            <p class="is-size-7 has-text-grey mt-1">Actor-disambiguation accuracy across visual box, static coordinate, and relational reference interfaces.</p>
+          </div>
+          <div class="column is-half">
+            <h3 class="title is-5">Frame Budget Sweep Heatmap</h3>
+            <img src="../assets/static/images/actionlens/frame_sweep_heatmap.png" alt="Frame Sweep Heatmap" width="100%">
+            <p class="is-size-7 has-text-grey mt-1">Accuracy above chance across frame counts (1 to 64 frames), showing temporal sensitivity on person-binding diagnostics.</p>
+          </div>
+        </div>
+
+        <h2 class="title is-3">Benchmark Comparison</h2>
+        <div class="content">
+          <p>Comparison of ActionLens with established video benchmarks.</p>
+          <div class="table-container">
+            <table class="table is-fullwidth is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th>Benchmark</th>
+                  <th class="has-text-centered">QA Pairs</th>
+                  <th class="has-text-centered">Clips</th>
+                  <th class="has-text-centered">Per-Sec Temporal GT</th>
+                  <th class="has-text-centered">Per-Person Spatial GT</th>
+                  <th class="has-text-centered">Multi-Person Compositional</th>
+                  <th class="has-text-centered">Iterated Human Validation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>VideoMME</td>
+                  <td class="has-text-centered">2,700</td>
+                  <td class="has-text-centered">900</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                </tr>
+                <tr>
+                  <td>MVBench</td>
+                  <td class="has-text-centered">4,000</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">Partial</td>
+                  <td class="has-text-centered">--</td>
+                </tr>
+                <tr>
+                  <td>EgoSchema</td>
+                  <td class="has-text-centered">5,031</td>
+                  <td class="has-text-centered">5,031</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                </tr>
+                <tr>
+                  <td>STAR</td>
+                  <td class="has-text-centered">60,000</td>
+                  <td class="has-text-centered">22,000</td>
+                  <td class="has-text-centered">Partial</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                </tr>
+                <tr>
+                  <td>PerceptionTest</td>
+                  <td class="has-text-centered">11,619</td>
+                  <td class="has-text-centered">691</td>
+                  <td class="has-text-centered">&#10003;</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">Partial</td>
+                  <td class="has-text-centered">--</td>
+                </tr>
+                <tr>
+                  <td>TempCompass</td>
+                  <td class="has-text-centered">7,540</td>
+                  <td class="has-text-centered">500</td>
+                  <td class="has-text-centered">&#10003;</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                  <td class="has-text-centered">--</td>
+                </tr>
+                <tr class="is-selected">
+                  <td><strong>ActionLens (Ours)</strong></td>
+                  <td class="has-text-centered"><strong>6,701</strong></td>
+                  <td class="has-text-centered"><strong>6,701</strong></td>
+                  <td class="has-text-centered">&#10003;</td>
+                  <td class="has-text-centered">&#10003;</td>
+                  <td class="has-text-centered">&#10003;</td>
+                  <td class="has-text-centered">&#10003;</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h2 class="title is-3">Leaderboard &amp; Evaluation</h2>
+        <div class="content">
+          <p>Performance of 20 Vision-Language Models on ActionLens. Bold indicates the best result in each column; underline indicates the best within model groups. Weighted average is computed across all 6,701 questions.</p>
+
+          <div class="table-container">
+            <table class="table is-fullwidth is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Size</th>
+                  <th class="has-text-centered">Transition Sensitivity</th>
+                  <th class="has-text-centered">Actor Disambig.</th>
+                  <th class="has-text-centered">Concurrent Binding</th>
+                  <th class="has-text-centered">Interaction Reasoning</th>
+                  <th class="has-text-centered">Gaze Detection</th>
+                  <th class="has-text-centered">Weighted Avg.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background-color: #fff3cd;">
+                  <td><strong>Human Reference</strong></td>
+                  <td>--</td>
+                  <td class="has-text-centered"><strong>84.5</strong></td>
+                  <td class="has-text-centered"><strong>92.4</strong></td>
+                  <td class="has-text-centered"><strong>94.0</strong></td>
+                  <td class="has-text-centered"><strong>92.8</strong></td>
+                  <td class="has-text-centered"><strong>89.6</strong></td>
+                  <td class="has-text-centered"><strong>91.0</strong></td>
+                </tr>
+                <tr class="is-selected"><td colspan="8"><em>Reference Section (Human &amp; Proprietary Models on Review Subset)</em></td></tr>
+                <tr>
+                  <td>GPT-5.2</td>
+                  <td>--</td>
+                  <td class="has-text-centered">68.8</td>
+                  <td class="has-text-centered">76.0</td>
+                  <td class="has-text-centered">76.4</td>
+                  <td class="has-text-centered">70.0</td>
+                  <td class="has-text-centered">47.2</td>
+                  <td class="has-text-centered">67.6</td>
+                </tr>
+                <tr>
+                  <td>Gemini 3 Flash</td>
+                  <td>--</td>
+                  <td class="has-text-centered">58.3</td>
+                  <td class="has-text-centered">54.4</td>
+                  <td class="has-text-centered">52.4</td>
+                  <td class="has-text-centered">27.6</td>
+                  <td class="has-text-centered">33.2</td>
+                  <td class="has-text-centered">44.6</td>
+                </tr>
+
+                <tr class="is-selected"><td colspan="8"><em>Baselines</em></td></tr>
+                <tr>
+                  <td>Random Chance</td>
+                  <td>--</td>
+                  <td class="has-text-centered">25.0</td>
+                  <td class="has-text-centered">25.0</td>
+                  <td class="has-text-centered">25.0</td>
+                  <td class="has-text-centered">26.7</td>
+                  <td class="has-text-centered">25.0</td>
+                  <td class="has-text-centered">25.4</td>
+                </tr>
+
+                <tr class="is-selected"><td colspan="8"><em>Large Open-Source Models (&ge;27B)</em></td></tr>
+                <tr>
+                  <td>Qwen3.5-27B</td>
+                  <td>27B</td>
+                  <td class="has-text-centered">64.9</td>
+                  <td class="has-text-centered"><u><strong>67.7</strong></u></td>
+                  <td class="has-text-centered"><u><strong>74.8</strong></u></td>
+                  <td class="has-text-centered"><u><strong>77.3</strong></u></td>
+                  <td class="has-text-centered"><u><strong>43.3</strong></u></td>
+                  <td class="has-text-centered"><u><strong>65.6</strong></u></td>
+                </tr>
+                <tr>
+                  <td>InternVL3.5-38B</td>
+                  <td>38B</td>
+                  <td class="has-text-centered"><u>68.0</u></td>
+                  <td class="has-text-centered">65.5</td>
+                  <td class="has-text-centered">68.4</td>
+                  <td class="has-text-centered">68.7</td>
+                  <td class="has-text-centered">38.6</td>
+                  <td class="has-text-centered">61.5</td>
+                </tr>
+                <tr>
+                  <td>Qwen3-VL-32B</td>
+                  <td>32B</td>
+                  <td class="has-text-centered">63.4</td>
+                  <td class="has-text-centered">64.0</td>
+                  <td class="has-text-centered">66.9</td>
+                  <td class="has-text-centered">68.8</td>
+                  <td class="has-text-centered">40.5</td>
+                  <td class="has-text-centered">60.6</td>
+                </tr>
+                <tr>
+                  <td>Gemma-4-31B</td>
+                  <td>31B</td>
+                  <td class="has-text-centered">63.9</td>
+                  <td class="has-text-centered">63.0</td>
+                  <td class="has-text-centered">72.9</td>
+                  <td class="has-text-centered">61.6</td>
+                  <td class="has-text-centered">42.0</td>
+                  <td class="has-text-centered">60.5</td>
+                </tr>
+                <tr>
+                  <td>Qwen2.5-VL-32B</td>
+                  <td>32B</td>
+                  <td class="has-text-centered">66.0</td>
+                  <td class="has-text-centered">54.4</td>
+                  <td class="has-text-centered">70.5</td>
+                  <td class="has-text-centered">64.7</td>
+                  <td class="has-text-centered">34.3</td>
+                  <td class="has-text-centered">57.6</td>
+                </tr>
+                <tr>
+                  <td>LLaVA-Video-32B</td>
+                  <td>32B</td>
+                  <td class="has-text-centered">60.3</td>
+                  <td class="has-text-centered">45.0</td>
+                  <td class="has-text-centered">42.0</td>
+                  <td class="has-text-centered">51.0</td>
+                  <td class="has-text-centered">28.7</td>
+                  <td class="has-text-centered">44.7</td>
+                </tr>
+                <tr>
+                  <td>Gemma-3-27B</td>
+                  <td>27B</td>
+                  <td class="has-text-centered">67.0</td>
+                  <td class="has-text-centered">37.9</td>
+                  <td class="has-text-centered">35.1</td>
+                  <td class="has-text-centered">26.4</td>
+                  <td class="has-text-centered">25.8</td>
+                  <td class="has-text-centered">37.1</td>
+                </tr>
+
+                <tr class="is-selected"><td colspan="8"><em>Mid-Size Open-Source Models (7--9B)</em></td></tr>
+                <tr>
+                  <td>Qwen3.5-9B</td>
+                  <td>9B</td>
+                  <td class="has-text-centered">64.9</td>
+                  <td class="has-text-centered"><u>64.6</u></td>
+                  <td class="has-text-centered">69.1</td>
+                  <td class="has-text-centered"><u>70.3</u></td>
+                  <td class="has-text-centered"><u>37.6</u></td>
+                  <td class="has-text-centered"><u>61.1</u></td>
+                </tr>
+                <tr>
+                  <td>Qwen3-VL-8B</td>
+                  <td>8B</td>
+                  <td class="has-text-centered">61.9</td>
+                  <td class="has-text-centered">57.4</td>
+                  <td class="has-text-centered"><u>70.9</u></td>
+                  <td class="has-text-centered">66.2</td>
+                  <td class="has-text-centered">30.8</td>
+                  <td class="has-text-centered">59.3</td>
+                </tr>
+                <tr>
+                  <td>InternVL3.5-8B</td>
+                  <td>8B</td>
+                  <td class="has-text-centered">60.3</td>
+                  <td class="has-text-centered">58.7</td>
+                  <td class="has-text-centered">65.5</td>
+                  <td class="has-text-centered">59.7</td>
+                  <td class="has-text-centered">33.6</td>
+                  <td class="has-text-centered">55.3</td>
+                </tr>
+                <tr>
+                  <td>VideoLLaMA3-7B</td>
+                  <td>7B</td>
+                  <td class="has-text-centered"><u>71.6</u></td>
+                  <td class="has-text-centered">51.7</td>
+                  <td class="has-text-centered">52.6</td>
+                  <td class="has-text-centered">58.4</td>
+                  <td class="has-text-centered">27.3</td>
+                  <td class="has-text-centered">51.4</td>
+                </tr>
+                <tr>
+                  <td>LLaVA-OneVision-7B</td>
+                  <td>7B</td>
+                  <td class="has-text-centered">67.0</td>
+                  <td class="has-text-centered">47.5</td>
+                  <td class="has-text-centered">53.8</td>
+                  <td class="has-text-centered">53.4</td>
+                  <td class="has-text-centered">27.8</td>
+                  <td class="has-text-centered">49.1</td>
+                </tr>
+                <tr>
+                  <td>LLaVA-Video-7B</td>
+                  <td>7B</td>
+                  <td class="has-text-centered">53.6</td>
+                  <td class="has-text-centered">34.0</td>
+                  <td class="has-text-centered">53.9</td>
+                  <td class="has-text-centered">39.2</td>
+                  <td class="has-text-centered">25.0</td>
+                  <td class="has-text-centered">40.6</td>
+                </tr>
+
+                <tr class="is-selected"><td colspan="8"><em>Small Open-Source Models (&le;4B)</em></td></tr>
+                <tr>
+                  <td>Qwen3.5-4B</td>
+                  <td>4B</td>
+                  <td class="has-text-centered">60.3</td>
+                  <td class="has-text-centered"><u>66.0</u></td>
+                  <td class="has-text-centered"><u>69.9</u></td>
+                  <td class="has-text-centered"><u>69.0</u></td>
+                  <td class="has-text-centered"><u>35.3</u></td>
+                  <td class="has-text-centered"><u>60.1</u></td>
+                </tr>
+                <tr>
+                  <td>Qwen3-VL-4B</td>
+                  <td>4B</td>
+                  <td class="has-text-centered"><u>68.0</u></td>
+                  <td class="has-text-centered">60.0</td>
+                  <td class="has-text-centered">67.6</td>
+                  <td class="has-text-centered">63.4</td>
+                  <td class="has-text-centered">30.1</td>
+                  <td class="has-text-centered">57.3</td>
+                </tr>
+                <tr>
+                  <td>InternVL3.5-4B</td>
+                  <td>4B</td>
+                  <td class="has-text-centered">61.9</td>
+                  <td class="has-text-centered">54.8</td>
+                  <td class="has-text-centered">66.2</td>
+                  <td class="has-text-centered">52.5</td>
+                  <td class="has-text-centered">31.6</td>
+                  <td class="has-text-centered">53.0</td>
+                </tr>
+                <tr>
+                  <td>Gemma-4-E4B</td>
+                  <td>4B</td>
+                  <td class="has-text-centered">52.1</td>
+                  <td class="has-text-centered">47.9</td>
+                  <td class="has-text-centered">64.6</td>
+                  <td class="has-text-centered">43.2</td>
+                  <td class="has-text-centered">28.2</td>
+                  <td class="has-text-centered">47.0</td>
+                </tr>
+                <tr>
+                  <td>Gemma-3-4B</td>
+                  <td>4B</td>
+                  <td class="has-text-centered">48.5</td>
+                  <td class="has-text-centered">30.7</td>
+                  <td class="has-text-centered">27.2</td>
+                  <td class="has-text-centered">24.3</td>
+                  <td class="has-text-centered">24.2</td>
+                  <td class="has-text-centered">31.4</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h2 class="title is-3">How to run</h2>
+        <div class="content">
+          <p>ActionLens is integrated into <a href="https://github.com/joslefaure/lmms-eval/tree/add-actionlens-dataset">lmms-eval</a>. Run evaluation with:</p>
+          <pre><code>git clone -b add-actionlens-dataset https://github.com/joslefaure/lmms-eval.git
+cd lmms-eval
+pip install -e .
+
+accelerate launch --num_processes=1 -m lmms_eval   --model vllm   --model_args pretrained="Qwen/Qwen3.5-27B-Instruct",tensor_parallel_size=2   --tasks actionlens   --batch_size 1   --output_path ./results/actionlens_qwen35_27b
+          </code></pre>
         </div>
       </div>
     </section>
 
-    <!-- Comprehensive Interactive Leaderboard -->
-    <section class="section" id="leaderboard" style="background: var(--bg-subtle);">
-      <div class="container is-max-desktop">
-        <div class="section-heading">
-          <span class="tag is-success is-light">Evaluation</span>
-          <h2>ActionLens Leaderboard</h2>
-          <p>Exact-match accuracy (%) across 20 Vision-Language Models, evaluated under standardized prompts on NVIDIA H100 GPUs.</p>
-        </div>
-
-        <!-- Filter Buttons -->
-        <div class="leaderboard-filters">
-          <button class="filter-btn active" onclick="filterLeaderboard('all', this)">All Models (20)</button>
-          <button class="filter-btn" onclick="filterLeaderboard('frontier', this)">Frontier / Closed</button>
-          <button class="filter-btn" onclick="filterLeaderboard('large', this)">Large Open (≥27B)</button>
-          <button class="filter-btn" onclick="filterLeaderboard('mid', this)">Mid-Size (7–9B)</button>
-          <button class="filter-btn" onclick="filterLeaderboard('small', this)">Small (≤4B)</button>
-        </div>
-
-        <!-- Table -->
-        <div class="table-box">
-          <table class="table is-fullwidth is-striped is-hoverable is-actionlens" id="leaderboardTable">
-            <thead>
-              <tr>
-                <th onclick="sortTable(0)">Rank <i class="fas fa-sort ml-1"></i></th>
-                <th onclick="sortTable(1)">Model <i class="fas fa-sort ml-1"></i></th>
-                <th onclick="sortTable(2)">Size <i class="fas fa-sort ml-1"></i></th>
-                <th class="has-text-centered" onclick="sortTable(3)">D1: Transition <i class="fas fa-sort ml-1"></i></th>
-                <th class="has-text-centered" onclick="sortTable(4)">D2: Actor Dis. <i class="fas fa-sort ml-1"></i></th>
-                <th class="has-text-centered" onclick="sortTable(5)">D3: Concurrent <i class="fas fa-sort ml-1"></i></th>
-                <th class="has-text-centered" onclick="sortTable(6)">D4: Interaction <i class="fas fa-sort ml-1"></i></th>
-                <th class="has-text-centered" onclick="sortTable(7)">D5: Gaze <i class="fas fa-sort ml-1"></i></th>
-                <th class="has-text-centered" onclick="sortTable(8)" style="background: #1e3a8a;">Weighted Avg <i class="fas fa-sort ml-1"></i></th>
-              </tr>
-            </thead>
-            <tbody id="leaderboardBody">
-              <!-- Dynamically populated via JS -->
-            </tbody>
-          </table>
-        </div>
-        <p class="is-size-7 has-text-grey mt-2">
-          * Weighted Avg = accuracy across all 6,701 questions (question-micro aggregate). Human pooled reference evaluated across 1,194 review items. Random chance accounts for D4's 3-option items (26.7%).
-        </p>
-      </div>
-    </section>
-
-    <!-- Reproducibility & lmms-eval Quick Start -->
-    <section class="section" id="reproducibility" style="background: #ffffff;">
-      <div class="container is-max-desktop">
-        <div class="section-heading">
-          <span class="tag is-dark is-light">Reproducibility</span>
-          <h2>Evaluate Any Model with lmms-eval</h2>
-          <p>ActionLens is fully integrated into lmms-eval. Reproduce all benchmark results with a single command.</p>
-        </div>
-
-        <div class="code-container">
-          <button class="copy-btn" onclick="copyCode(this, 'evalCommand')"><i class="far fa-copy mr-1"></i> Copy</button>
-          <pre style="background: transparent; color: inherit; padding: 0; margin: 0;"><code id="evalCommand"># 1. Install lmms-eval with ActionLens support
-git clone -b add-actionlens-dataset https://github.com/joslefaure/lmms-eval.git
-cd lmms-eval && pip install -e .
-
-# 2. Run one-command evaluation on any supported model (e.g. Qwen3.5-27B)
-accelerate launch --num_processes=1 -m lmms_eval   --model vllm   --model_args pretrained="Qwen/Qwen3.5-27B-Instruct",tensor_parallel_size=2   --tasks actionlens   --batch_size 1   --output_path ./results/actionlens_qwen35_27b</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- BibTeX Citation -->
-    <section class="section pt-0" id="bibtex">
-      <div class="container is-max-desktop">
-        <div class="section-heading mb-3">
-          <h2>Citation</h2>
-        </div>
-        <div class="code-container">
-          <button class="copy-btn" onclick="copyCode(this, 'bibtexCode')"><i class="far fa-copy mr-1"></i> Copy</button>
-          <pre style="background: transparent; color: inherit; padding: 0; margin: 0;"><code id="bibtexCode">@article{faure2026actionlens,
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@article{faure2026actionlens,
   title   = {ActionLens: Diagnosing Spatial-Temporal Binding Failures in Vision-Language Models},
-  author  = {Faure, Gueter Josmy and Chen, Min-Hung and Wang, Hao Ping and Lardy, Timoth{\'e}e and Su, Hung-Ting and Hsu, Winston H.},
+  author  = {Faure, Gueter Josmy and Chen, Min-Hung and Wang, Hao Ping and Lardy, Timoth{'e}e and Su, Hung-Ting and Hsu, Winston H.},
   journal = {arXiv preprint},
   year    = {2026},
   url     = {https://joslefaure.github.io/actionlens}
 }</code></pre>
-        </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="page-footer">
-      <div class="container is-max-desktop has-text-centered">
-        <p class="mb-2">
-          <strong>ActionLens</strong> is maintained by <a href="https://joslefaure.github.io/" style="font-weight: 600; color: #1e293b;">Gueter Josmy Faure</a> and collaborators.
-        </p>
-        <p class="is-size-7 text-muted">
-          Website template inspired by <a href="https://nerfies.github.io/">Nerfies</a> and <a href="https://joslefaure.github.io/assets/html/finebench.html">FineBench</a>.
-          The benchmark data is derived under CC-BY 4.0 from the AVA dataset.
-        </p>
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <a class="icon-link" href="https://joslefaure.github.io/"><i class="fas fa-home"></i></a>
+        </div>
       </div>
     </footer>
 
-    <!-- JavaScript Interactions -->
+    <!-- Interactive Script -->
     <script>
-      // Leaderboard Data
-      const leaderboardData = [{"rank": "\u2014", "model": "Human Reference \u2605", "group": "human", "size": "Human", "d1": 84.5, "d2": 92.4, "d3": 94.0, "d4": 92.8, "d5": 89.6, "avg": 91.0, "is_human": true}, {"rank": "\u2014", "model": "Random Chance", "group": "baseline", "size": "\u2014", "d1": 25.0, "d2": 25.0, "d3": 25.0, "d4": 26.7, "d5": 25.0, "avg": 25.4, "is_baseline": true}, {"rank": 1, "model": "GPT-5.2", "group": "frontier", "size": "Proprietary", "d1": 68.8, "d2": 76.0, "d3": 76.4, "d4": 70.0, "d5": 47.2, "avg": 67.6}, {"rank": 2, "model": "Qwen3.5-27B", "group": "large", "size": "27B", "d1": 64.9, "d2": 67.7, "d3": 74.8, "d4": 77.3, "d5": 43.3, "avg": 65.6, "is_best_open": true}, {"rank": 3, "model": "InternVL3.5-38B", "group": "large", "size": "38B", "d1": 68.0, "d2": 65.5, "d3": 68.4, "d4": 68.7, "d5": 38.6, "avg": 61.5}, {"rank": 4, "model": "Qwen3.5-9B", "group": "mid", "size": "9B", "d1": 64.9, "d2": 64.6, "d3": 69.1, "d4": 70.3, "d5": 37.6, "avg": 61.1}, {"rank": 5, "model": "Qwen3-VL-32B", "group": "large", "size": "32B", "d1": 63.4, "d2": 64.0, "d3": 66.9, "d4": 68.8, "d5": 40.5, "avg": 60.6}, {"rank": 6, "model": "Gemma-4-31B", "group": "large", "size": "31B", "d1": 63.9, "d2": 63.0, "d3": 72.9, "d4": 61.6, "d5": 42.0, "avg": 60.5}, {"rank": 7, "model": "Qwen3.5-4B", "group": "small", "size": "4B", "d1": 60.3, "d2": 66.0, "d3": 69.9, "d4": 69.0, "d5": 35.3, "avg": 60.1}, {"rank": 8, "model": "Qwen3-VL-8B", "group": "mid", "size": "8B", "d1": 61.9, "d2": 57.4, "d3": 70.9, "d4": 66.2, "d5": 30.8, "avg": 59.3}, {"rank": 9, "model": "Qwen2.5-VL-32B", "group": "large", "size": "32B", "d1": 66.0, "d2": 54.4, "d3": 70.5, "d4": 64.7, "d5": 34.3, "avg": 57.6}, {"rank": 10, "model": "Qwen3-VL-4B", "group": "small", "size": "4B", "d1": 68.0, "d2": 60.0, "d3": 67.6, "d4": 63.4, "d5": 30.1, "avg": 57.3}, {"rank": 11, "model": "InternVL3.5-8B", "group": "mid", "size": "8B", "d1": 60.3, "d2": 58.7, "d3": 65.5, "d4": 59.7, "d5": 33.6, "avg": 55.3}, {"rank": 12, "model": "InternVL3.5-4B", "group": "small", "size": "4B", "d1": 61.9, "d2": 54.8, "d3": 66.2, "d4": 52.5, "d5": 31.6, "avg": 53.0}, {"rank": 13, "model": "VideoLLaMA3-7B", "group": "mid", "size": "7B", "d1": 71.6, "d2": 51.7, "d3": 52.6, "d4": 58.4, "d5": 27.3, "avg": 51.4}, {"rank": 14, "model": "LLaVA-OneVision-7B", "group": "mid", "size": "7B", "d1": 67.0, "d2": 47.5, "d3": 53.8, "d4": 53.4, "d5": 27.8, "avg": 49.1}, {"rank": 15, "model": "Gemma-4-E4B", "group": "small", "size": "4B", "d1": 52.1, "d2": 47.9, "d3": 64.6, "d4": 43.2, "d5": 28.2, "avg": 47.0}, {"rank": 16, "model": "LLaVA-Video-32B", "group": "large", "size": "32B", "d1": 60.3, "d2": 45.0, "d3": 42.0, "d4": 51.0, "d5": 28.7, "avg": 44.7}, {"rank": 17, "model": "Gemini 3 Flash", "group": "frontier", "size": "Proprietary", "d1": 58.3, "d2": 54.4, "d3": 52.4, "d4": 27.6, "d5": 33.2, "avg": 44.6}, {"rank": 18, "model": "LLaVA-Video-7B", "group": "mid", "size": "7B", "d1": 53.6, "d2": 34.0, "d3": 53.9, "d4": 39.2, "d5": 25.0, "avg": 40.6}, {"rank": 19, "model": "Gemma-3-27B", "group": "large", "size": "27B", "d1": 67.0, "d2": 37.9, "d3": 35.1, "d4": 26.4, "d5": 25.8, "avg": 37.1}, {"rank": 20, "model": "Gemma-3-4B", "group": "small", "size": "4B", "d1": 48.5, "d2": 30.7, "d3": 27.2, "d4": 24.3, "d5": 24.2, "avg": 31.4}];
+      const samplesData = {
+        d1: {
+          badge: "194 Questions",
+          samples: [
+            {
+              name: "Sample 1: Grabbing to Lifting",
+              video: "d1_sample_1.mp4",
+              question: "What action transition does the person in the red box undergo during this clip?",
+              options: [
+                { label: "A", text: "Transitions from grabbing someone to lifting someone.", type: "correct", tag: "Ground Truth (Human)" },
+                { label: "B", text: "Transitions from grabbing someone to talking to someone.", type: "", tag: "" },
+                { label: "C", text: "Transitions from talking to someone to lifting someone.", type: "trap", tag: "Common VLM Error" },
+                { label: "D", text: "Transitions from lifting someone to grabbing someone.", type: "reversal", tag: "Temporal Reversal Trap" }
+              ],
+              analysis: "Tests whether models can detect temporal state change rather than relying on static dominant cues. Models often over-index on dominant posture and confuse the sequence direction."
+            },
+            {
+              name: "Sample 2: Sitting to Lying",
+              video: "d1_sample_2.mp4",
+              question: "What action transition does the person in the red box undergo during this clip?",
+              options: [
+                { label: "A", text: "Transitions from pulling something to lying/sleeping.", type: "", tag: "" },
+                { label: "B", text: "Transitions from lying/sleeping to sitting.", type: "reversal", tag: "Temporal Reversal Trap" },
+                { label: "C", text: "Transitions from sitting to lying/sleeping.", type: "correct", tag: "Ground Truth (Human)" },
+                { label: "D", text: "Transitions from sitting to pulling something.", type: "", tag: "" }
+              ],
+              analysis: "Tests posture transition sensitivity centered on the boundary second. Distractors evaluate direction of time and physically plausible alternate posture changes."
+            }
+          ]
+        },
+        d2: {
+          badge: "2,000 Questions",
+          samples: [
+            {
+              name: "Sample 1: Kitchen Scene (Cutting vs Touching)",
+              video: "d2_sample_1.mp4",
+              question: "What is the person in the blue box doing?",
+              options: [
+                { label: "A", text: "bending/bowing (at the waist)", type: "", tag: "" },
+                { label: "B", text: "cutting", type: "correct", tag: "Ground Truth (Human)" },
+                { label: "C", text: "touching something", type: "trap", tag: "Red Person's Action (Binding Trap)" },
+                { label: "D", text: "listening to someone", type: "", tag: "" }
+              ],
+              analysis: "Two chefs in a kitchen. The person in red touches items; the person in blue is cutting. Models frequently fall for the Binding Trap, attributing the red actor's action to the blue actor (up to 53% trap rate)."
+            },
+            {
+              name: "Sample 2: Two-Person Scene (Watching vs Holding)",
+              video: "d2_sample_2.mp4",
+              question: "What is the person in the blue box doing?",
+              options: [
+                { label: "A", text: "watching someone", type: "correct", tag: "Ground Truth (Human)" },
+                { label: "B", text: "carrying/holding something", type: "trap", tag: "Binding Trap" },
+                { label: "C", text: "watching", type: "", tag: "" },
+                { label: "D", text: "looking at a cellphone", type: "", tag: "" }
+              ],
+              analysis: "In multi-person interactions, models suffer from actor leakage. Removing visual box overlays drops accuracy up to 19.2 points."
+            }
+          ]
+        },
+        d3: {
+          badge: "2,000 Questions",
+          samples: [
+            {
+              name: "Sample 1: Smoking while Walking",
+              video: "d3_sample_1.mp4",
+              question: "Which pair of actions is the person in the red box performing at the same time?",
+              options: [
+                { label: "A", text: "carrying/holding something while walking", type: "trap", tag: "Single-Action Guess Trap" },
+                { label: "B", text: "smoking while walking", type: "correct", tag: "Ground Truth (Human)" },
+                { label: "C", text: "smoking while pushing something", type: "", tag: "Co-action Distractor" },
+                { label: "D", text: "carrying/holding something while pulling something", type: "", tag: "" }
+              ],
+              analysis: "Requires simultaneous perception of posture/locomotion (walking) and object manipulation (smoking). Distractors are verified against mutual exclusivity matrices."
+            },
+            {
+              name: "Sample 2: Carrying while Walking",
+              video: "d3_sample_2.mp4",
+              question: "Which pair of actions is the person in the red box performing at the same time?",
+              options: [
+                { label: "A", text: "cutting while walking", type: "", tag: "" },
+                { label: "B", text: "cutting while putting something down", type: "", tag: "" },
+                { label: "C", text: "carrying/holding something while standing", type: "", tag: "Posture Error" },
+                { label: "D", text: "carrying/holding something while walking", type: "correct", tag: "Ground Truth (Human)" }
+              ],
+              analysis: "Single person with exactly 2 visual co-actions. Tests whether models can bind dual actions to one entity without dropping secondary cues."
+            }
+          ]
+        },
+        d4: {
+          badge: "1,611 Questions",
+          samples: [
+            {
+              name: "Sample 1: Vehicle Scene (Driving & Talking vs Riding & Listening)",
+              video: "d4_sample_1.mp4",
+              question: "How are the person in the red box and the person in the blue box interacting?",
+              options: [
+                { label: "A", text: "The person in the red box is talking and driving while the person in the blue box is listening and riding.", type: "correct", tag: "Ground Truth (Human)" },
+                { label: "B", text: "The person in the blue box is talking and driving while the person in the red box is listening and riding.", type: "", tag: "Role Inversion" },
+                { label: "C", text: "The person in the red box is talking and sitting while the person in the blue box is listening and driving.", type: "", tag: "Co-action Swap" },
+                { label: "D", text: "The person in the red box is talking and riding while the person in the blue box is listening and driving.", type: "trap", tag: "Common VLM Error" }
+              ],
+              analysis: "Driver (red box) speaks while driving; passenger (blue box) listens while riding. Models frequently invert conversational and physical roles in asymmetric interactions."
+            },
+            {
+              name: "Sample 2: Throwing & Talking",
+              video: "d4_sample_2.mp4",
+              question: "How are the person in the red box and the person in the blue box interacting?",
+              options: [
+                { label: "A", text: "The person in the red box is talking and throwing while the person in the blue box is listening and watching someone.", type: "correct", tag: "Ground Truth (Human)" },
+                { label: "B", text: "The person in the red box is talking and watching someone while the person in the blue box is listening and throwing.", type: "trap", tag: "Action Swap Trap" },
+                { label: "C", text: "The person in the red box is talking and watching someone while the person in the blue box is listening and sitting.", type: "", tag: "" },
+                { label: "D", text: "The person in the blue box is talking and throwing while the person in the red box is listening and watching someone.", type: "", tag: "Role Swap" }
+              ],
+              analysis: "Requires talker+listener pair where both have unique visual co-actions, preventing bag-of-words shortcuts."
+            }
+          ]
+        },
+        d5: {
+          badge: "896 Questions",
+          samples: [
+            {
+              name: "Sample 1: Room Gaze (Red Watches Blue)",
+              video: "d5_sample_1.mp4",
+              question: "Which of the two highlighted people is watching someone?",
+              options: [
+                { label: "A", text: "Neither person is watching anyone.", type: "trap", tag: "Common VLM Failure" },
+                { label: "B", text: "Only the person in the red box is watching someone.", type: "correct", tag: "Ground Truth (Human)" },
+                { label: "C", text: "Both people are watching someone.", type: "", tag: "" },
+                { label: "D", text: "Only the person in the blue box is watching someone.", type: "", tag: "" }
+              ],
+              analysis: "Person in red box watches person in blue box, while blue looks away. While humans achieve 89.6%, all evaluated VLMs collapse to near chance (25--47%)."
+            },
+            {
+              name: "Sample 2: Street Gaze Tracking",
+              video: "d5_sample_2.mp4",
+              question: "Which of the two highlighted people is watching someone?",
+              options: [
+                { label: "A", text: "Both people are watching someone.", type: "", tag: "" },
+                { label: "B", text: "Only the person in the red box is watching someone.", type: "correct", tag: "Ground Truth (Human)" },
+                { label: "C", text: "Neither person is watching anyone.", type: "", tag: "" },
+                { label: "D", text: "Only the person in the blue box is watching someone.", type: "", tag: "" }
+              ],
+              analysis: "Enforces 3-second temporal consistency with a balanced 4-way answer distribution."
+            }
+          ]
+        }
+      };
 
-      // Samples Data
-      const samplesData = {"d1": {"title": "D1 \u00b7 Transition Sensitivity", "badge": "194 Questions", "desc": "Detects whether a model perceives temporal state transitions rather than resting on dominant static actions.", "samples": [{"id": "1", "name": "Sample 1: Grabbing to Lifting", "video": "d1_sample_1.mp4", "question": "What action transition does the person in the red box undergo during this clip?", "options": [{"label": "A", "text": "Transitions from grabbing someone to lifting someone.", "status": "correct", "note": "Ground Truth (Human)"}, {"label": "B", "text": "Transitions from grabbing someone to talking to someone.", "status": "distractor", "note": ""}, {"label": "C", "text": "Transitions from talking to someone to lifting someone.", "status": "trap", "note": "Common VLM Error"}, {"label": "D", "text": "Transitions from lifting someone to grabbing someone.", "status": "reversal", "note": "Temporal Reversal Trap"}], "analysis": "A variable-length 3\u201310s clip centered on the exact transition boundary. Models that pool frames indiscriminately over-index on dominant cues and choose the static or reversal trap."}, {"id": "2", "name": "Sample 2: Sitting to Lying", "video": "d1_sample_2.mp4", "question": "What action transition does the person in the red box undergo during this clip?", "options": [{"label": "A", "text": "Transitions from pulling something to lying/sleeping.", "status": "distractor", "note": ""}, {"label": "B", "text": "Transitions from lying/sleeping to sitting.", "status": "reversal", "note": "Temporal Reversal Trap"}, {"label": "C", "text": "Transitions from sitting to lying/sleeping.", "status": "correct", "note": "Ground Truth (Human)"}, {"label": "D", "text": "Transitions from sitting to pulling something.", "status": "distractor", "note": ""}], "analysis": "Tests posture transition sensitivity. Distractors specifically evaluate direction of time and physically plausible alternate posture changes."}]}, "d2": {"title": "D2 \u00b7 Actor Disambiguation", "badge": "2,000 Questions", "desc": "Evaluates which actor is performing which action in multi-person scenes, probing the Binding Trap.", "samples": [{"id": "1", "name": "Sample 1: Kitchen Scene (Cutting vs Touching)", "video": "d2_sample_1.mp4", "question": "What is the person in the blue box doing?", "options": [{"label": "A", "text": "bending/bowing (at the waist)", "status": "distractor", "note": ""}, {"label": "B", "text": "cutting", "status": "correct", "note": "Ground Truth (Human)"}, {"label": "C", "text": "touching something", "status": "trap", "note": "Binding Trap (Red Person's Action)"}, {"label": "D", "text": "listening to someone", "status": "distractor", "note": ""}], "analysis": "Two chefs work in a kitchen. The person in the red box is touching utensils; the person in the blue box is cutting. Models frequently fall for the Binding Trap, attributing the red person's action to the blue person (up to 53% trap rate!)."}, {"id": "2", "name": "Sample 2: Two-Person Scene (Watching vs Holding)", "video": "d2_sample_2.mp4", "question": "What is the person in the blue box doing?", "options": [{"label": "A", "text": "watching someone", "status": "correct", "note": "Ground Truth (Human)"}, {"label": "B", "text": "carrying/holding something", "status": "trap", "note": "Binding Trap"}, {"label": "C", "text": "watching", "status": "distractor", "note": ""}, {"label": "D", "text": "looking at a cellphone", "status": "distractor", "note": ""}], "analysis": "In multi-person interactions, models suffer from actor leakage. Furthermore, replacing visual boxes with static coordinates causes up to a 19.2% collapse, revealing a severe visual grounding deficit."}]}, "d3": {"title": "D3 \u00b7 Concurrent Action Binding", "badge": "2,000 Questions", "desc": "Probes whether a model can bind two simultaneous actions performed by the exact same actor.", "samples": [{"id": "1", "name": "Sample 1: Smoking while Walking", "video": "d3_sample_1.mp4", "question": "Which pair of actions is the person in the red box performing at the same time?", "options": [{"label": "A", "text": "carrying/holding something while walking", "status": "trap", "note": "Single-Action Guess Trap"}, {"label": "B", "text": "smoking while walking", "status": "correct", "note": "Ground Truth (Human)"}, {"label": "C", "text": "smoking while pushing something", "status": "distractor", "note": "Co-action Distractor"}, {"label": "D", "text": "carrying/holding something while pulling something", "status": "distractor", "note": ""}], "analysis": "Requires simultaneous perception of posture/locomotion (walking) and object manipulation (smoking). Distractors are verified against mutual exclusivity matrices."}, {"id": "2", "name": "Sample 2: Carrying while Walking", "video": "d3_sample_2.mp4", "question": "Which pair of actions is the person in the red box performing at the same time?", "options": [{"label": "A", "text": "cutting while walking", "status": "distractor", "note": ""}, {"label": "B", "text": "cutting while putting something down", "status": "distractor", "note": ""}, {"label": "C", "text": "carrying/holding something while standing", "status": "distractor", "note": "Posture Error"}, {"label": "D", "text": "carrying/holding something while walking", "status": "correct", "note": "Ground Truth (Human)"}], "analysis": "Single person with exactly 2 visual co-actions. Tests whether models can bind dual actions to one entity without dropping secondary cues."}]}, "d4": {"title": "D4 \u00b7 Directed Interaction Reasoning", "badge": "1,611 Questions", "desc": "Tests comprehension of asymmetric conversational and physical roles in two-person interactions.", "samples": [{"id": "1", "name": "Sample 1: Vehicle Scene (Driving & Talking vs Riding & Listening)", "video": "d4_sample_1.mp4", "question": "How are the person in the red box and the person in the blue box interacting?", "options": [{"label": "A", "text": "The person in the red box is talking and driving while the person in the blue box is listening and riding.", "status": "correct", "note": "Ground Truth (Human)"}, {"label": "B", "text": "The person in the blue box is talking and driving while the person in the red box is listening and riding.", "status": "distractor", "note": "Complete Role Inversion"}, {"label": "C", "text": "The person in the red box is talking and sitting while the person in the blue box is listening and driving.", "status": "distractor", "note": "Co-action Swap"}, {"label": "D", "text": "The person in the red box is talking and riding while the person in the blue box is listening and driving.", "status": "trap", "note": "Common VLM Error (Inverted Driver)"}], "analysis": "Driver (red box) speaks while driving; passenger (blue box) listens while riding. Models frequently confuse who is driving versus riding, showing failure in asymmetric role binding."}, {"id": "2", "name": "Sample 2: Throwing & Talking", "video": "d4_sample_2.mp4", "question": "How are the person in the red box and the person in the blue box interacting?", "options": [{"label": "A", "text": "The person in the red box is talking and throwing while the person in the blue box is listening and watching someone.", "status": "correct", "note": "Ground Truth (Human)"}, {"label": "B", "text": "The person in the red box is talking and watching someone while the person in the blue box is listening and throwing.", "status": "trap", "note": "Action Swap Trap"}, {"label": "C", "text": "The person in the red box is talking and watching someone while the person in the blue box is listening and sitting.", "status": "distractor", "note": ""}, {"label": "D", "text": "The person in the blue box is talking and throwing while the person in the red box is listening and watching someone.", "status": "distractor", "note": "Role Swap"}], "analysis": "Requires talker+listener pair where both have unique visual co-actions. Prevents shortcut guessing by verifying that both roles must be accurately grounded."}]}, "d5": {"title": "D5 \u00b7 Gaze Detection", "badge": "896 Questions", "desc": "Tests fine-grained 3D head and eye orientation to determine who is looking at whom.", "samples": [{"id": "1", "name": "Sample 1: Room Gaze (Red Watches Blue)", "video": "d5_sample_1.mp4", "question": "Which of the two highlighted people is watching someone?", "options": [{"label": "A", "text": "Neither person is watching anyone.", "status": "trap", "note": "Common VLM Failure (Near Chance)"}, {"label": "B", "text": "Only the person in the red box is watching someone.", "status": "correct", "note": "Ground Truth (Human)"}, {"label": "C", "text": "Both people are watching someone.", "status": "distractor", "note": ""}, {"label": "D", "text": "Only the person in the blue box is watching someone.", "status": "distractor", "note": ""}], "analysis": "Person in red box watches person in blue box, while blue looks away. While humans achieve 89.6%, all evaluated VLMs collapse to near random guessing (25\u201347%) on gaze detection."}, {"id": "2", "name": "Sample 2: Street Gaze Tracking", "video": "d5_sample_2.mp4", "question": "Which of the two highlighted people is watching someone?", "options": [{"label": "A", "text": "Both people are watching someone.", "status": "distractor", "note": ""}, {"label": "B", "text": "Only the person in the red box is watching someone.", "status": "correct", "note": "Ground Truth (Human)"}, {"label": "C", "text": "Neither person is watching anyone.", "status": "distractor", "note": ""}, {"label": "D", "text": "Only the person in the blue box is watching someone.", "status": "distractor", "note": ""}], "analysis": "Features a 3-second temporal consistency constraint (>=3 consecutive seconds in the 5s window must agree). Perfectly balanced 4-way answer distribution (224 per gaze type)."}]}};
+      let activeDiag = 'd1';
+      let activeSampleIdx = 0;
 
-      let currentDiag = 'd1';
-      let currentSampleIndex = 0;
-
-      // Render Diagnostic Tab
-      function renderDiagnostic(diagKey, sampleIdx = 0) {
-        currentDiag = diagKey;
-        currentSampleIndex = sampleIdx;
+      function renderSample(diagKey, idx) {
+        activeDiag = diagKey;
+        activeSampleIdx = idx;
         const data = samplesData[diagKey];
-        const sample = data.samples[sampleIdx];
+        const sample = data.samples[idx];
 
         // Update nav buttons
         document.querySelectorAll('.diag-btn').forEach(btn => {
-          btn.classList.toggle('is-active', btn.dataset.diag === diagKey);
+          const match = btn.dataset.diag === diagKey;
+          btn.classList.toggle('is-outlined', !match);
         });
 
-        // Update Sample switcher
-        const btn1 = document.getElementById('btnSample1');
-        const btn2 = document.getElementById('btnSample2');
-        btn1.classList.toggle('active', sampleIdx === 0);
-        btn2.classList.toggle('active', sampleIdx === 1);
-        btn1.textContent = data.samples[0].name.split(':')[0];
-        btn2.textContent = data.samples[1].name.split(':')[0];
+        // Update sample 1 / 2 buttons
+        document.getElementById('btnSample1').classList.toggle('is-active', idx === 0);
+        document.getElementById('btnSample2').classList.toggle('is-active', idx === 1);
 
         // Update Video
         const video = document.getElementById('diagVideo');
         video.src = '../assets/static/videos/actionlens/' + sample.video;
         video.play().catch(() => {});
 
-        // Update Texts
+        // Update texts
         document.getElementById('diagBadge').textContent = data.badge;
         document.getElementById('sampleName').textContent = sample.name;
         document.getElementById('sampleQuestion').textContent = sample.question;
 
-        // Render Options
+        // Render options
         const optContainer = document.getElementById('sampleOptions');
         optContainer.innerHTML = '';
         sample.options.forEach(opt => {
           const div = document.createElement('div');
-          div.className = 'mcq-option ' + (opt.status === 'correct' ? 'is-correct' : (opt.status === 'trap' ? 'is-trap' : (opt.status === 'reversal' ? 'is-reversal' : '')));
+          div.className = 'mcq-opt ' + (opt.type || '');
           div.innerHTML = `
-            <span class="opt-label">${opt.label}.</span>
-            <span class="opt-content">${opt.text}</span>
-            ${opt.note ? `<span class="opt-tag">${opt.note}</span>` : ''}
+            <strong>${opt.label}.</strong>&nbsp;&nbsp;<span>${opt.text}</span>
+            ${opt.tag ? `<span class="opt-tag ${opt.type}">${opt.tag}</span>` : ''}
           `;
           optContainer.appendChild(div);
         });
 
-        // Update Analysis
+        // Render analysis
         document.getElementById('sampleAnalysis').innerHTML = `
-          <strong><i class="fas fa-info-circle mr-1 text-primary"></i> Diagnostic Insight:</strong> ${sample.analysis}
+          <strong>Diagnostic Note:</strong> ${sample.analysis}
         `;
       }
 
       function switchSample(idx) {
-        renderDiagnostic(currentDiag, idx);
+        renderSample(activeDiag, idx);
       }
 
-      // Initialize tabs click listener
       document.getElementById('diagNav').addEventListener('click', (e) => {
         const btn = e.target.closest('.diag-btn');
         if (btn) {
-          renderDiagnostic(btn.dataset.diag, 0);
+          renderSample(btn.dataset.diag, 0);
         }
       });
 
-      // Render Leaderboard
-      function renderLeaderboard(filter = 'all') {
-        const tbody = document.getElementById('leaderboardBody');
-        tbody.innerHTML = '';
-
-        leaderboardData.forEach(row => {
-          // Check filter
-          if (filter !== 'all' && row.group !== filter && !row.is_human && !row.is_baseline) {
-            return;
-          }
-
-          const tr = document.createElement('tr');
-          if (row.is_human) tr.className = 'row-human';
-          else if (row.is_baseline) tr.className = 'row-baseline';
-
-          tr.innerHTML = `
-            <td><strong>${row.rank}</strong></td>
-            <td>
-              ${row.is_human ? `<span class="tag is-warning is-light mr-1"><i class="fas fa-crown"></i></span><strong>${row.model}</strong>` : (row.is_best_open ? `<span class="tag is-info is-light mr-1">Best Open</span><strong>${row.model}</strong>` : row.model)}
-            </td>
-            <td>${row.size}</td>
-            <td class="has-text-centered">${row.d1.toFixed(1)}</td>
-            <td class="has-text-centered">${row.d2.toFixed(1)}</td>
-            <td class="has-text-centered">${row.d3.toFixed(1)}</td>
-            <td class="has-text-centered">${row.d4.toFixed(1)}</td>
-            <td class="has-text-centered">${row.d5.toFixed(1)}</td>
-            <td class="has-text-centered font-weight-bold" style="background: rgba(37,99,235,0.06); font-weight:700;">
-              <span class="${row.avg >= 65 ? 'best-val' : ''}">${row.avg.toFixed(1)}</span>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-      }
-
-      function filterLeaderboard(cat, btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderLeaderboard(cat);
-      }
-
-      // Table Sorting
-      let sortDir = {};
-      function sortTable(colIdx) {
-        const keyMap = ['rank', 'model', 'size', 'd1', 'd2', 'd3', 'd4', 'd5', 'avg'];
-        const key = keyMap[colIdx];
-        sortDir[key] = !sortDir[key];
-
-        // Separate human and baseline from sortable models
-        const pinnedTop = leaderboardData.filter(r => r.is_human);
-        const pinnedBottom = leaderboardData.filter(r => r.is_baseline);
-        const sortable = leaderboardData.filter(r => !r.is_human && !r.is_baseline);
-
-        sortable.sort((a, b) => {
-          let vA = a[key];
-          let vB = b[key];
-          if (typeof vA === 'string') return sortDir[key] ? vA.localeCompare(vB) : vB.localeCompare(vA);
-          return sortDir[key] ? vA - vB : vB - vA;
-        });
-
-        // Reassemble
-        leaderboardData.length = 0;
-        leaderboardData.push(...pinnedTop, ...sortable, ...pinnedBottom);
-        const activeFilter = document.querySelector('.filter-btn.active').getAttribute('onclick').match(/'([^']+)'/)[1];
-        renderLeaderboard(activeFilter);
-      }
-
-      // Copy Code Utility
-      function copyCode(btn, elementId) {
-        const text = document.getElementById(elementId).innerText;
-        navigator.clipboard.writeText(text).then(() => {
-          const original = btn.innerHTML;
-          btn.innerHTML = '<i class="fas fa-check mr-1" style="color: #10b981;"></i> Copied!';
-          setTimeout(() => {
-            btn.innerHTML = original;
-          }, 2000);
-        });
-      }
-
-      // Mobile Navbar Toggle
       document.addEventListener('DOMContentLoaded', () => {
-        const burger = document.querySelector('.navbar-burger');
-        const menu = document.querySelector('#actionlensNavbar');
-        if (burger && menu) {
-          burger.addEventListener('click', () => {
-            burger.classList.toggle('is-active');
-            menu.classList.toggle('is-active');
-          });
-        }
-
-        // Initialize First Diagnostic & Leaderboard
-        renderDiagnostic('d1', 0);
-        renderLeaderboard('all');
+        renderSample('d1', 0);
       });
     </script>
   </body>
