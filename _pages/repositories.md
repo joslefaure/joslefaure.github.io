@@ -3,7 +3,7 @@ layout: page
 permalink: /repositories/
 title: Repositories
 description: Selected Projects.
-nav: true
+nav: false
 nav_order: 4
 ---
 
