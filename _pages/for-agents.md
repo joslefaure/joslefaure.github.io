@@ -25,7 +25,9 @@ nav_order: 4
 
 ```yaml
 profile:
-  name: "Gueter Josmy Faure"
+  full_name: "Gueter Josmy Faure"
+  given_name: "Gueter Josmy"
+  surname: "Faure"
   headline: "Software Engineer at Google | PhD Candidate in CSIE at National Taiwan University"
   location: "Taipei City, Taiwan"
   summary: >

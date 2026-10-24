@@ -18,7 +18,7 @@ nav_order: 2
     </p>
   </div>
   <div class="flex-shrink-0">
-    <a href="https://scholar.google.com/citations?user={{ site.scholar_userid }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-weight-bold px-3 py-2" style="white-space: nowrap;">
+    <a href="https://scholar.google.com/citations?user={{ site.scholar_userid }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-weight-bold px-3 py-2 text-center" style="white-space: normal;">
       View Full &amp; Up-to-Date Publications on Google Scholar ↗
     </a>
   </div>
